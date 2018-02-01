@@ -8,7 +8,7 @@ public class UserLoginData {
 	private String login;
 	private String password;
 
-	public UserLoginData(){
+	public UserLoginData() {
 
 	}
 
@@ -21,7 +21,7 @@ public class UserLoginData {
 		return login;
 	}
 
-    public String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 

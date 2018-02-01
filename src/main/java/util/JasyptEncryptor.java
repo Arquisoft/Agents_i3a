@@ -7,13 +7,13 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
  */
 public class JasyptEncryptor {
 
-    private StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+	private StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
 
-    public boolean checkPassword(String inputPassword, String encryptedPassword){
-        return encryptor.checkPassword(inputPassword, encryptedPassword);
-    }
+	public boolean checkPassword(String inputPassword, String encryptedPassword) {
+		return encryptor.checkPassword(inputPassword, encryptedPassword);
+	}
 
-    public String encryptPassword(String password){
-        return encryptor.encryptPassword(password);
-    }
+	public String encryptPassword(String password) {
+		return encryptor.encryptPassword(password);
+	}
 }
