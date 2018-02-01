@@ -8,7 +8,12 @@
 
 Skeleton of participants module
 
-# Authors
+# Current Authors
+- [Guillermo Facundo Colunga](https://github.com/ZenMaster91)
+- [Carlos García Hernández](https://github.com/CarlosGarciaHdez)
+- [Victor Suárez Fernández](https://github.com/ByBordex)
+
+# Original Authors
 
 - Herminio García González (@herminiogg)
 - Jose Emilio Labra Gayo (@labra)
