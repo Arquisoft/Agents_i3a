@@ -1,8 +1,9 @@
 # I3A Agents Module
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a5332a696ea4b06aa9f43a39f3f21f0)](https://www.codacy.com/app/jelabra/agents_i3a?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Arquisoft/agents_i3a&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/Arquisoft/agents_i3a.svg?branch=master)](https://travis-ci.org/Arquisoft/agents_i3a)[![codecov](https://codecov.io/gh/Arquisoft/participants_i2b/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/agents_i3a)
-[![Join the chat at https://gitter.im/Arquisoft/agents_i3a](https://badges.gitter.im/Arquisoft/agents_i3a.svg)](https://gitter.im/Arquisoft/agents_i3a?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/Arquisoft/Agents_i3a.svg?branch=master)](https://travis-ci.org/Arquisoft/Agents_i3a)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a5332a696ea4b06aa9f43a39f3f21f0)](https://www.codacy.com/app/jelabra/Agents_i3a?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Arquisoft/agents_i3a&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/Arquisoft/Agents_i3a/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/Agents_i3a)
+[![Join the chat at https://gitter.im/Arquisoft/agents_i3a](https://badges.gitter.im/Arquisoft/Agents_i3a.svg)](https://gitter.im/Arquisoft/Agents_i3a?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This repository contains the agents module of the team I3A2. Developed during the 2018 Software Architecture course.
 
