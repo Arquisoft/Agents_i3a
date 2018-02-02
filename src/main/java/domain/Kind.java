@@ -19,4 +19,4 @@ public enum Kind {
     public void setValue(int value) {
 	this.value = value;
     }
-};
+}
