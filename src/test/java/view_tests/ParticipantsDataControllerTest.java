@@ -1,18 +1,21 @@
 package view_tests;
 
-/**
- * Created by Jorge.
- * Test for the ParticipantsDataController, mainly focused on REST requests
- */
-import com.gargoylesoftware.htmlunit.WebClient;
-import dbmanagement.UsersRepository;
-import domain.User;
-import main.Application;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Calendar;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -22,19 +25,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import dbmanagement.UsersRepository;
+import domain.Kind;
+import domain.User;
+import main.Application;
 import services.ParticipantsService;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Calendar;
-
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -72,7 +68,7 @@ public class ParticipantsDataControllerTest {
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		plainPassword = "pass14753";
-		maria = new User("Maria", "MamaMia", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158");
+		maria = new User("Maria", "10N30E", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158", Kind.PERSON);
 		repo.insert(maria);
 		
 		mariaAge = Period.between(
@@ -95,14 +91,12 @@ public class ParticipantsDataControllerTest {
 		mockMvc.perform(request).andDo(print())// AndDoPrint it is very usefull to see the http response and see if
 												// something went wrong.
 				.andExpect(status().isOk()) // The state of the response must be OK. (200);
-				.andExpect(jsonPath("$.firstName", is(maria.getFirstName()))) // We can do jsonpaths in order to check
-																				// that the json information displayes
-																				// its ok.
-				.andExpect(jsonPath("$.lastName", is(maria.getLastName()))).andExpect(jsonPath("$.age", is(mariaAge)))// Born
-																												// in
-																												// 1996
-				.andExpect(jsonPath("$.userId", is(maria.getUserId())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())));
+				.andExpect(jsonPath("$.name", is(maria.getName()))) // We can do jsonpaths in order to check																							// 1996
+				.andExpect(jsonPath("$.id", is(maria.getUserId())))
+				.andExpect(jsonPath("$.location", is(maria.getLocation())))
+				.andExpect(jsonPath("$.email", is(maria.getEmail())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 	}
 
 	@Test
@@ -115,14 +109,12 @@ public class ParticipantsDataControllerTest {
 		mockMvc.perform(request).andDo(print())// AndDoPrint it is very usefull to see the http response and see if
 												// something went wrong.
 				.andExpect(status().isOk()) // The state of the response must be OK. (200);
-				.andExpect(jsonPath("$.firstName", is(maria.getFirstName()))) // We can do jsonpaths in order to check
-																				// that the json information displayes
-																				// its ok.
-				.andExpect(jsonPath("$.lastName", is(maria.getLastName()))).andExpect(jsonPath("$.age", is(mariaAge)))// Born
-																												// in
-																												// 1996
-				.andExpect(jsonPath("$.userId", is(maria.getUserId())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())));
+				.andExpect(jsonPath("$.name", is(maria.getName()))) // We can do jsonpaths in order to check
+				.andExpect(jsonPath("$.id", is(maria.getUserId())))
+				.andExpect(jsonPath("$.location", is(maria.getLocation())))
+				.andExpect(jsonPath("$.email", is(maria.getEmail())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 	}
 
 	@Test
@@ -170,10 +162,16 @@ public class ParticipantsDataControllerTest {
 		// We check password has changed
 		request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
 		mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.firstName", is(maria.getFirstName())))
-				.andExpect(jsonPath("$.lastName", is(maria.getLastName()))).andExpect(jsonPath("$.age", is(mariaAge)))
-				.andExpect(jsonPath("$.userId", is(maria.getUserId())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())));
+				.andExpect(jsonPath("$.name", is(maria.getName())))
+				.andExpect(jsonPath("$.location", is(maria.getLocation())))
+				.andExpect(jsonPath("$.id", is(maria.getUserId())))
+				.andExpect(jsonPath("$.location", is(maria.getLocation())))
+				.andExpect(jsonPath("$.email", is(maria.getEmail())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
+		
+		
+		
 	}
 
 }

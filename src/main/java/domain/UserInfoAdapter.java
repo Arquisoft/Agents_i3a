@@ -1,14 +1,12 @@
 package domain;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-
 /**
  * Created by Nicolás on 15/02/2017. Class in charge of translating a User
  * object into the response format Note: this class only creates a model class
  * that contains a subset of the fields in the User class
+ * 
+ * Adapted by Víctor on 02/02/2018
+ * 
  */
 public class UserInfoAdapter {
 
@@ -19,9 +17,6 @@ public class UserInfoAdapter {
 	}
 
 	public UserInfo userToInfo() {
-		LocalDate current = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate then = user.getDateOfBirth().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		Period per = Period.between(then, current);
-		return new UserInfo(user.getFirstName(), user.getLastName(), per.getYears(), user.getUserId(), user.getEmail());
+		return new UserInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind().toString() , user.getKind().getValue());
 	}
 }

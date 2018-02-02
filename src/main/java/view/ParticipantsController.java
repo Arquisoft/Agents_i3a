@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Nicolás on 08/02/2017.
+ * 
  */
 @Controller
 public class ParticipantsController {
@@ -42,10 +43,11 @@ public class ParticipantsController {
 		} else {
 			UserInfoAdapter adapter = new UserInfoAdapter(user);
 			UserInfo info = adapter.userToInfo();
-			model.addAttribute("fName", info.getFirstName());
-			model.addAttribute("lName", info.getLastName());
-			model.addAttribute("age", info.getAge());
+			model.addAttribute("name", info.getName());
+			model.addAttribute("location", info.getLocation());
 			model.addAttribute("email", info.getEmail());
+			model.addAttribute("kind", info.getKind());
+			model.addAttribute("kindCode", info.getKindCode());
 			model.addAttribute("user", user);
 			session.setAttribute("user", user);
 			return "data";
