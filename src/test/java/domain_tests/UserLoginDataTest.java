@@ -1,13 +1,16 @@
 package domain_tests;
 
-import domain.UserLoginData;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import domain.UserLoginData;
 
 /**
  * Created by Nicolás on 18/02/2017.
+ * 
+ * Adapter by Víctor on 02/02/2018
  */
 public class UserLoginDataTest {
 
