@@ -2,13 +2,13 @@ package domain_tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.Kind;
 import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
@@ -23,14 +23,19 @@ public class UserAdapterTest {
 	private User user1;
 	private User user2;
 	
+	/**
+	 * A resources/master.csv file is needed with first record -> 1; Person
+	 * @throws IOException 
+	 */
+	
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 1996);
 		user1 = new User("User1", "10N20E", "User1@hola.com", "user1Password", new Date(cal.getTime().getTime()),
-				"C/ hola", "spanish", "112233", Kind.PERSON);
+				"C/ hola", "spanish", "112233", 1);
 		user2 = new User("User2", "20S10W", "User2@hola.com", "user2Password", new Date(), "C/ hola", "spanish",
-				"112233", Kind.PERSON);
+				"112233", 1);
 	}
 
 	@Test
@@ -50,8 +55,8 @@ public class UserAdapterTest {
 		UserInfo info = adapter.userToInfo();
 		String toString = info.toString();
 		String test = "UserInfo{name='User2', location='20S10W', "
-				+ "email='User2@hola.com', id='112233', kind='PERSON', kindCode=1}";
-		assertEquals(toString, test);
+				+ "email='User2@hola.com', id='112233', kind='Person', kindCode=1}";
+		assertEquals(test, toString);
 	}
 
 }

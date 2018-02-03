@@ -1,16 +1,16 @@
 package domain_tests;
 
-import domain.Kind;
-import domain.User;
-import util.JasyptEncryptor;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import domain.User;
+import util.JasyptEncryptor;
 
 /**
  * Created by Damian on 15/02/2017.
@@ -23,16 +23,23 @@ public class UserTest {
 	private User jorge;
 	private User damian;
 
+	/**
+	 * Also a resources/master.csv file is needed with the following rows:
+	 * 1 , Person
+	 * 2 , Entity
+	 * 3 , Sensor
+	 * @throws IOException 
+	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		Calendar cal = Calendar.getInstance();
 		cal.set(1996, Calendar.JUNE, 12);
 		nico = new User("Nicolás", "nico@nicomail.com", "nico123");
 		jorge = new User("Jorge", "45N30E", "jorge@jorgemail.com", "jorge123", cal.getTime(), "C/ La calle", "España",
-				"111111111A", Kind.ENTITY);
+				"111111111A", 2);
 		cal.set(1997, Calendar.AUGUST, 1);
 		damian = new User("Damian", "45S30W", "damian@damianmail.com", "damian123", cal.getTime(), "C/ The street",
-				"Inglaterra", "222222222B",Kind.SENSOR);
+				"Inglaterra", "222222222B",3);
 	}
 
 	@Test
@@ -148,23 +155,22 @@ public class UserTest {
 	}
 	
 	@Test
-	public void kindTest()
+	public void kindTest() throws IOException
 	{
 	    	Assert.assertEquals(null, nico.getKind());
-
-		Assert.assertEquals(Kind.ENTITY, jorge.getKind());
-		Assert.assertEquals(Kind.ENTITY.getValue(), jorge.getKind().getValue());
+		Assert.assertEquals("Entity", jorge.getKind());
+		Assert.assertEquals(2, jorge.getKindCode());
 		
-		Assert.assertEquals(Kind.SENSOR, damian.getKind());
-		Assert.assertEquals(Kind.SENSOR.getValue(), damian.getKind().getValue());
+		Assert.assertEquals("Sensor", damian.getKind());
+		Assert.assertEquals(3, damian.getKindCode());
 		
-		nico.setKind(Kind.PERSON);
-		Assert.assertEquals(Kind.PERSON, nico.getKind());
-		Assert.assertEquals(Kind.PERSON.getValue(), nico.getKind().getValue());
+		nico.setKindCode(1);
+		Assert.assertEquals("Person", nico.getKind());
+		Assert.assertEquals(1, nico.getKindCode());
 		
-		jorge.setKind(Kind.PERSON);
-		Assert.assertEquals(Kind.PERSON, jorge.getKind());
-		Assert.assertEquals(Kind.PERSON.getValue(), jorge.getKind().getValue());
+		jorge.setKindCode(1);
+		Assert.assertEquals("Person", jorge.getKind());
+		Assert.assertEquals(1, jorge.getKindCode());
 		
 	}
 	
@@ -172,9 +178,9 @@ public class UserTest {
 	public void kindCodeTest()
 	{
 
-		Assert.assertEquals(2, jorge.getKind().getValue());
+		Assert.assertEquals(2, jorge.getKindCode());
 
-		Assert.assertEquals(3, damian.getKind().getValue());
+		Assert.assertEquals(3, damian.getKindCode());
 	}
 
 }
