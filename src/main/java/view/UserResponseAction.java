@@ -1,3 +1,14 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package view;
 
 import org.springframework.http.HttpStatus;
@@ -10,22 +21,25 @@ import domain.UserLoginData;
 import services.ParticipantsService;
 
 /**
- * Created by Nicolás on 17/02/2017. Class that handles the login data response.
- * Access the service layer and recovers the user
+ * Class that handles the login data response. Access the service layer and
+ * recovers the user
+ *
+ * @author Nicolás
+ * @since 17/02/2017
  */
 public class UserResponseAction {
-	private final ParticipantsService part;
+    private final ParticipantsService part;
 
-	UserResponseAction(ParticipantsService part) {
-		this.part = part;
-	}
+    UserResponseAction(ParticipantsService part) {
+	this.part = part;
+    }
 
-	public ResponseEntity<UserInfo> execute(UserLoginData info) {
-		User user = part.getParticipant(info.getLogin(), info.getPassword());
-		UserInfoAdapter data = new UserInfoAdapter(user);
-		if (user == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} else
-			return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
-	}
+    public ResponseEntity<UserInfo> execute(UserLoginData info) {
+	User user = part.getParticipant(info.getLogin(), info.getPassword());
+	UserInfoAdapter data = new UserInfoAdapter(user);
+	if (user == null) {
+	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	} else
+	    return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
+    }
 }

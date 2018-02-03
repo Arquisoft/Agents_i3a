@@ -1,18 +1,29 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package domain;
 
 import java.io.Serializable;
 
 /**
- * Created by Nicolás on 15/02/2017. Class that serves as a response for the
- * service, providing a subset of the User class' fields
+ * Class that serves as a response for the service, providing a subset of the
+ * User class' fields.
  * 
  * Adapted by Víctor on 02/02/2018
+ * 
+ * @author Nicolás.
+ * @since 15/02/2017
  */
 public class UserInfo implements Serializable {
 
-    /**
-    * 
-    */
     private static final long serialVersionUID = 1L;
     private String name;
     private String location;

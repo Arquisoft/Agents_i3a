@@ -1,20 +1,33 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package domain;
 
 import java.io.IOException;
 import java.util.Date;
 
 import org.bson.types.ObjectId;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import Foundation.CSVFile;
 import Foundation.URL;
-import util.JasyptEncryptor;
 
 /**
- * Created by Damian on 06/02/2017.
+ * Instance of the user.
+ * 
+ * @author Damian.
+ * @since 06/02/2017
  */
-
 @Document(collection = "users")
 public class User {
 
@@ -38,7 +51,7 @@ public class User {
     public User(String name, String email, String password) {
 	this.name = name;
 	this.email = email;
-	this.password = encryptPass(password);
+	setPassword(password);
     }
 
     public User(String name, String location, String email, String password, Date dateOfBirth, String address,
@@ -80,18 +93,30 @@ public class User {
 	return userId.hashCode();
     }
 
+    /**
+     * @return the name of the user.
+     */
     public String getName() {
 	return name;
     }
 
+    /**
+     * @return the email of the user.
+     */
     public String getEmail() {
 	return email;
     }
 
+    /**
+     * @return the password of the user.
+     */
     public String getPassword() {
 	return password;
     }
 
+    /**
+     * @return the date of bir... to remove....
+     */
     public Date getDateOfBirth() {
 	return new Date(dateOfBirth.getTime());
     }
@@ -104,6 +129,9 @@ public class User {
 	return nationality;
     }
 
+    /**
+     * @return get the user id.
+     */
     public String getUserId() {
 	return userId;
     }
@@ -117,7 +145,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-	this.password = encryptPass(password);
+	this.password =  new StrongPasswordEncryptor().encryptPassword(password);
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
@@ -140,20 +168,31 @@ public class User {
 	this.location = location;
     }
 
+    /**
+     * Gets the kind of user as a plain text. that will depend from a master csv file.
+     * 
+     * @return the kind of user as a plain text. that will depend from a master csv file.
+     */
     public String getKind() {
-	return CSVFile.of(new URL("resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
+	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
     }
 
+    /**
+     * Gives the kind of user as a code (int type).
+     * 
+     * @return the kind of user as a code (int type).
+     */
     public int getKindCode() {
 	return kindCode;
     }
 
+    /**
+     * Sets the kind of user from a code.
+     * 
+     * @param kindCode to set to the user.
+     */
     public void setKindCode(int kindCode) {
 	this.kindCode = kindCode;
-    }
-
-    private String encryptPass(String password) {
-	return new JasyptEncryptor().encryptPassword(password);
     }
 
 }

@@ -1,3 +1,14 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package domain_tests;
 
 import java.io.IOException;
@@ -5,12 +16,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import domain.User;
-import util.JasyptEncryptor;
 
 /**
  * Created by Damian on 15/02/2017.
@@ -86,7 +97,7 @@ public class UserTest {
     @Test
     public void passwordTest() {
 
-	JasyptEncryptor encryptor = new JasyptEncryptor();
+	StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
 
 	nico.setPassword("1234");
 

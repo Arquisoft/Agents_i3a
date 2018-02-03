@@ -1,9 +1,21 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package database_tests;
 
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +31,6 @@ import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
-import util.JasyptEncryptor;
 
 /**
  * Created by Nicolás on 15/02/2017.
@@ -92,10 +103,9 @@ public class DatabaseTest {
 		// It should be previously encoded if the DB is given so this may be changed.
 		User user = dat.getParticipant("LGracia@gmail.com");
 		user.setPassword("confidencial");
-		JasyptEncryptor encryptor = new JasyptEncryptor();
 		dat.updateInfo(user);
 		User userAfter = dat.getParticipant("LGracia@gmail.com");
-		Assert.assertTrue(encryptor.checkPassword("confidencial", userAfter.getPassword())); // They should be the same
+		Assert.assertTrue(new StrongPasswordEncryptor().checkPassword("confidencial", userAfter.getPassword())); // They should be the same
 																								// when we introduce the
 																								// password.
 		Assert.assertEquals(user, userAfter); // They should be the same user by the equals.
