@@ -46,7 +46,7 @@ public class AgentLoginDataTest {
 	@Test
 	public void getPassword() throws Exception {
 		assertEquals("holaPassword", test.getPassword());
-		assertEquals("Hola2Password", test2.getLogin());
+		assertEquals("Hola2Password", test2.getPassword());
 	}
 
 	@Test
