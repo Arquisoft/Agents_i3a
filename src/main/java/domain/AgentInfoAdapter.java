@@ -32,14 +32,14 @@ package domain;
  */
 public class AgentInfoAdapter {
 
-    private Agent user;
+	private Agent user;
 
-    public AgentInfoAdapter(Agent user) {
-	this.user = user;
-    }
+	public AgentInfoAdapter( Agent user ) {
+		this.user = user;
+	}
 
-    public AgentInfo userToInfo() {
-	return new AgentInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind(),
-		user.getKindCode());
-    }
+	public AgentInfo userToInfo() {
+		return new AgentInfo( user.getName(), user.getLocation(), user.getEmail(), user.getUserId(),
+				user.getKindCode() );
+	}
 }

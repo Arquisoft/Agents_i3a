@@ -17,8 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,138 +35,151 @@ import dbmanagement.UsersRepository;
 import domain.Agent;
 import main.Application;
 
-@SpringBootTest(classes = { Application.class })
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ParticipantsDataControllerTest {
+@SpringBootTest(classes = {
+		Application.class }) @RunWith(SpringJUnit4ClassRunner.class) public class ParticipantsDataControllerTest {
 
-	@Autowired
-	private WebApplicationContext context;
+	@Autowired private WebApplicationContext context;
+	
+	private static final String QUERY_STRING = "{\"login\":\"%s\", \"password\":\"%s\", \"kind\":\"%s\"}";
 
 	// MockMvc --> Para realizar peticiones y comprobar resultado, usado para
 	// respuestas con informacion json.
 	private MockMvc mockMvc;
 
-	@Autowired
-	private UsersRepository repo;
+	@Autowired private UsersRepository repo;
 
 	private MockHttpSession session;
 
 	private Agent maria;
 	private String plainPassword;
 
-	@Before
-	public void setUp() throws Exception {
+	@Before public void setUp() throws Exception {
 
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup( this.context ).build();
 
 		session = new MockHttpSession();
 
 		// Setting up maria
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, 1990);
-		cal.set(Calendar.MONTH, 1);
-		cal.set(Calendar.DAY_OF_MONTH, 1);
 		plainPassword = "pass14753";
-		maria = new Agent("Maria", "10N30E", "asd", plainPassword, "158", 1);
-		repo.insert(maria);
-		
+		maria = new Agent( "Maria", "10N30E", "asd", plainPassword, "158", 1 );
+		repo.insert( maria );
+
 	}
 
-	@After
-	public void tearDown() {
-		repo.delete(maria);
+	@After public void tearDown() {
+		repo.delete( maria );
 	}
 
-	@Test
-	public void userInsertInformation() throws Exception {
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), plainPassword);
+	@Test public void userInsertInformation() throws Exception {
+		String payload = String.format( QUERY_STRING,
+				maria.getEmail(),
+				plainPassword, maria.getKindCode() );
 		// We send a POST request to that URI (from http:localhost...)
-		MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
-				.content(payload.getBytes());
-		mockMvc.perform(request).andDo(print())// AndDoPrint it is very usefull to see the http response and see if
-												// something went wrong.
-				.andExpect(status().isOk()) // The state of the response must be OK. (200);
-				.andExpect(jsonPath("$.name", is(maria.getName()))) // We can do jsonpaths in order to check																							// 1996
-				.andExpect(jsonPath("$.id", is(maria.getUserId())))
-				.andExpect(jsonPath("$.location", is(maria.getLocation())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind())))
-				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
+		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
+				.contentType( MediaType.APPLICATION_JSON )
+				.content( payload.getBytes() );
+		// AndDoPrint it is very usefull to see the http response and see if
+		// something went wrong.
+		mockMvc.perform( request ).andDo( print() )
+				// The state of the response must be OK. (200);
+				.andExpect( status().isOk() )
+				// We can do jsonpaths in order to check 1996
+				.andExpect( jsonPath( "$.name", is( maria.getName() ) ) )
+				.andExpect( jsonPath( "$.id", is( maria.getUserId() ) ) )
+				.andExpect( jsonPath( "$.location", is( maria.getLocation() ) ) )
+				.andExpect( jsonPath( "$.email", is( maria.getEmail() ) ) )
+				.andExpect( jsonPath( "$.kind", is( maria.getKind() ) ) )
+				.andExpect( jsonPath( "$.kindCode", is( maria.getKindCode() ) ) );
 	}
 
-	@Test
-	public void userInsertInformationXML() throws Exception {
-		String payload = String.format("<data><login>%s</login><password>%s</password></data>", maria.getEmail(),
-				plainPassword);
+	@Test public void userInsertInformationXML() throws Exception {
+		String payload = String.format( "<data><login>%s</login><password>%s</password><kind>%s</kind></data>",
+				maria.getEmail(),
+				plainPassword,
+				maria.getKindCode());
 		// POST request with XML content
-		MockHttpServletRequestBuilder request = post("/user").session(session)
-				.contentType(MediaType.APPLICATION_XML_VALUE).content(payload.getBytes());
-		mockMvc.perform(request).andDo(print())// AndDoPrint it is very usefull to see the http response and see if
-												// something went wrong.
-				.andExpect(status().isOk()) // The state of the response must be OK. (200);
-				.andExpect(jsonPath("$.name", is(maria.getName()))) // We can do jsonpaths in order to check
-				.andExpect(jsonPath("$.id", is(maria.getUserId())))
-				.andExpect(jsonPath("$.location", is(maria.getLocation())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind())))
-				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
+		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
+				.contentType( MediaType.APPLICATION_XML_VALUE ).content( payload.getBytes() );
+		// AndDoPrint it is very usefull to see the http response and see if
+		// something went wrong.
+		mockMvc.perform( request ).andDo( print() )
+				// The state of the response must be OK. (200);
+				.andExpect( status().isOk() )
+				// We can do jsonpaths in order to check
+				.andExpect( jsonPath( "$.name", is( maria.getName() ) ) )
+				.andExpect( jsonPath( "$.id", is( maria.getUserId() ) ) )
+				.andExpect( jsonPath( "$.location", is( maria.getLocation() ) ) )
+				.andExpect( jsonPath( "$.email", is( maria.getEmail() ) ) )
+				.andExpect( jsonPath( "$.kind", is( maria.getKind() ) ) )
+				.andExpect( jsonPath( "$.kindCode", is( maria.getKindCode() ) ) );
 	}
 
-	@Test
-	public void userInterfaceInsertInfoCorect() throws Exception {
-		MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getEmail())
-				.param("password", plainPassword);
-		mockMvc.perform(request).andExpect(status().isOk());
+	@Test public void userInterfaceInsertInfoCorect() throws Exception {
+		MockHttpServletRequestBuilder request = post( "/userForm" ).session( session )
+				.param( "login", maria.getEmail() )
+				.param( "password", plainPassword )
+				.param( "kind", Integer.toString( maria.getKindCode() ));
+		mockMvc.perform( request ).andExpect( status().isOk() );
 	}
 
-	@Test
-	public void testForNotFound() throws Exception {
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", "Nothing", "Not really");
-		MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
-				.content(payload.getBytes());
-		mockMvc.perform(request).andDo(print())// AndDoPrint it is very usefull to see the http response and see if
-												// something went wrong.
-				.andExpect(status().isNotFound()); // The state of the response must be OK. (200);
+	@Test public void testForNotFound() throws Exception {
+		String payload = String.format( QUERY_STRING, "Nothing",
+				"Not really", -1 );
+		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
+				.contentType( MediaType.APPLICATION_JSON )
+				.content( payload.getBytes() );
+		mockMvc.perform( request ).andDo( print() )// AndDoPrint it is very
+													// usefull to see the http
+													// response and see if
+													// something went wrong.
+				.andExpect( status().isNotFound() ); // The state of the
+														// response must be OK.
+														// (200);
 	}
 
 	/**
 	 * Should return a 404 as before
 	 */
-	@Test
-	public void testForIncorrectPassword() throws Exception {
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(),
-				"Not maria's password");
-		MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
-				.content(payload.getBytes());
-		mockMvc.perform(request).andDo(print()).andExpect(status().isNotFound());
+	@Test public void testForIncorrectPassword() throws Exception {
+		String payload = String.format( QUERY_STRING, maria.getEmail(),
+				"Not maria's password", 1 );
+		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
+				.contentType( MediaType.APPLICATION_JSON )
+				.content( payload.getBytes() );
+		mockMvc.perform( request ).andDo( print() ).andExpect( status().isNotFound() );
 	}
 
-	@Test
-	public void testChangePassword() throws Exception {
+	@Test public void testChangePassword() throws Exception {
 		MockHttpSession session = new MockHttpSession();
-		// We check we have the proper credentials
-		MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getEmail())
-				.param("password", plainPassword);
-		mockMvc.perform(request).andExpect(status().isOk());
-		// We change it
-		request = post("/userChangePassword").session(session).param("password", plainPassword)
-				.param("newPassword", "HOLA").param("newPasswordConfirm", "HOLA");
-		mockMvc.perform(request).andExpect(status().isOk());
 
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), "HOLA");
+		// We check we have the proper credentials
+		MockHttpServletRequestBuilder request = post( "/userForm" ).session( session )
+				.param( "login", maria.getEmail() )
+				.param( "password", plainPassword )
+				.param( "kind", Integer.toString( maria.getKindCode() ));
+		mockMvc.perform( request ).andExpect( status().isOk() );
+
+		// We change it
+		request = post( "/userChangePassword" ).session( session )
+				.param( "password", plainPassword )
+				.param( "newPassword", "HOLA" ).param( "newPasswordConfirm", "HOLA" );
+		mockMvc.perform( request ).andExpect( status().isOk() );
+
+		String payload = String.format( QUERY_STRING, maria.getEmail(),
+				"HOLA", maria.getKindCode() );
+		
 		// We check password has changed
-		request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
-		mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.name", is(maria.getName())))
-				.andExpect(jsonPath("$.location", is(maria.getLocation())))
-				.andExpect(jsonPath("$.id", is(maria.getUserId())))
-				.andExpect(jsonPath("$.location", is(maria.getLocation())))
-				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind())))
-				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
-		
-		
-		
+		request = post( "/user" ).session( session ).contentType( MediaType.APPLICATION_JSON )
+				.content( payload.getBytes() );
+		mockMvc.perform( request ).andDo( print() ).andExpect( status().isOk() )
+				.andExpect( jsonPath( "$.name", is( maria.getName() ) ) )
+				.andExpect( jsonPath( "$.location", is( maria.getLocation() ) ) )
+				.andExpect( jsonPath( "$.id", is( maria.getUserId() ) ) )
+				.andExpect( jsonPath( "$.location", is( maria.getLocation() ) ) )
+				.andExpect( jsonPath( "$.email", is( maria.getEmail() ) ) )
+				.andExpect( jsonPath( "$.kind", is( maria.getKind() ) ) )
+				.andExpect( jsonPath( "$.kindCode", is( maria.getKindCode() ) ) );
+
 	}
 
 }
