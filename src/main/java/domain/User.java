@@ -174,7 +174,7 @@ public class User {
      * @return the kind of user as a plain text. that will depend from a master csv file.
      */
     public String getKind() {
-	return CSVFile.of(new URL("resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
+	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
     }
 
     /**
