@@ -32,10 +32,6 @@ public class AgentInfo implements Serializable {
     private String kind;
     private int kindCode;
 
-    AgentInfo() {
-
-    }
-
     public AgentInfo(String name, String location, String email, String id, String kind, int kindCode) {
 	this.name = name;
 	this.location = location;

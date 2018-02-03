@@ -30,67 +30,72 @@ import main.Application;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AgentInfoTest {
 
+    // User to use as reference for test
+    private AgentInfo testedUser;
 
-	// User to use as reference for test
-	private AgentInfo testedUser;
+    @Before
+    public void setUp() throws IOException {
+	testedUser = new AgentInfo("Victor", "30N45E", "ejemplo@correo.com",
+		"asd", "Person", 1);
+    }
 
-	@Before
-	public void setUp() throws IOException {
-		testedUser = new AgentInfo("Victor", "30N45E","ejemplo@correo.com","asd", "Person", 1);
-	}
+    @Test
+    public void gettersTest() {
+	Assert.assertEquals("Victor", testedUser.getName());
+	Assert.assertEquals("30N45E", testedUser.getLocation());
+	Assert.assertEquals("ejemplo@correo.com", testedUser.getEmail());
+	Assert.assertEquals("asd", testedUser.getId());
+	Assert.assertEquals("Person", testedUser.getKind());
+	Assert.assertEquals(1, testedUser.getKindCode());
+    }
 
-	@Test
-	public void gettersTest()
-	{
-	    Assert.assertEquals("Victor", testedUser.getName());
-	    Assert.assertEquals("30N45E", testedUser.getLocation());
-	    Assert.assertEquals("ejemplo@correo.com", testedUser.getEmail());
-	    Assert.assertEquals("asd", testedUser.getId());
-	    Assert.assertEquals("Person", testedUser.getKind());
-	    Assert.assertEquals(1, testedUser.getKindCode());
-	}
-	
-	@Test
-	public void settersTest()
-	{
-	    
-	    testedUser.setName("Juan");
-	    testedUser.setLocation("10S30E");
-	    testedUser.setEmail("ejemplo2@correo.com");
-	    testedUser.setId("das");
-	    testedUser.setKind("Entity");
-	    testedUser.setKindCode(2);
-	    
-	    Assert.assertEquals("Juan", testedUser.getName());
-	    Assert.assertEquals("10S30E", testedUser.getLocation());
-	    Assert.assertEquals("ejemplo2@correo.com", testedUser.getEmail());
-	    Assert.assertEquals("das", testedUser.getId());
-	    Assert.assertEquals("Entity", testedUser.getKind());
-	    Assert.assertEquals(2, testedUser.getKindCode());
-	}
+    @Test
+    public void settersTest() {
 
-	@Test
-	public void toStringTest()
-	{
-	    
-	}
+	testedUser.setName("Juan");
+	testedUser.setLocation("10S30E");
+	testedUser.setEmail("ejemplo2@correo.com");
+	testedUser.setId("das");
+	testedUser.setKind("Entity");
+	testedUser.setKindCode(2);
+
+	Assert.assertEquals("Juan", testedUser.getName());
+	Assert.assertEquals("10S30E", testedUser.getLocation());
+	Assert.assertEquals("ejemplo2@correo.com", testedUser.getEmail());
+	Assert.assertEquals("das", testedUser.getId());
+	Assert.assertEquals("Entity", testedUser.getKind());
+	Assert.assertEquals(2, testedUser.getKindCode());
+    }
+
+    @Test
+    public void toStringTest() {
+	StringBuilder test = new StringBuilder("UserInfo{");
+	test.append("name='").append("Victor").append('\'');
+	test.append(", location='").append("30N45E").append('\'');
+	test.append(", email='").append("ejemplo@correo.com").append('\'');
+	test.append(", id='").append("asd").append('\'');
+	test.append(", kind='").append("Person").append('\'');
+	test.append(", kindCode=").append(1);
+	test.append('}');
 	
-	@Test
-	public void  hashCodeTest()
-	{
-	    Assert.assertEquals("asd".hashCode(), testedUser.hashCode());
-	}
-	
-	
-	@Test
-	public void equalsTest()
-	{
-	    AgentInfo other = new AgentInfo("Juan", "20N45E","ejemplo3@correo.com","rerere", "Person", 1);
-	    
-	    Assert.assertTrue( testedUser.equals( testedUser ) );
-	    
-	    Assert.assertFalse( testedUser.equals( other ) );
-	    Assert.assertFalse( testedUser.equals( null ) );
-	}
+	String correct = test.toString();
+	Assert.assertEquals(correct, testedUser.toString());
+    }
+
+    @Test
+    public void hashCodeTest() {
+	Assert.assertEquals("asd".hashCode(), testedUser.hashCode());
+    }
+
+    @Test
+    public void equalsTest() {
+	AgentInfo other = new AgentInfo("Juan", "20N45E", "ejemplo3@correo.com",
+		"rerere", "Person", 1);
+
+	Assert.assertTrue(testedUser.equals(testedUser));
+
+	Assert.assertFalse(testedUser.equals(other));
+	Assert.assertFalse(testedUser.equals(null));
+    }
 
 }
