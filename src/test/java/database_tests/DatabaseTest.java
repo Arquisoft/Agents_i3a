@@ -13,7 +13,6 @@ package database_tests;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.After;
@@ -47,7 +46,6 @@ public class DatabaseTest {
 	// User to use as reference for test
 	private Agent testedUser;
 	private Agent testedUser2;
-	private Calendar user2cal;
 
 	@Autowired
 	private Database dat;
@@ -75,7 +73,6 @@ public class DatabaseTest {
 		cal.set(Calendar.YEAR, 1990);
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
-		user2cal = cal;
 		testedUser2 = new Agent("Maria", "10N30E", "asd", "pass14753", "158",1);
 		repo.insert(testedUser2);
 	}

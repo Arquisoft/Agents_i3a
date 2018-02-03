@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;

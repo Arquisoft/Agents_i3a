@@ -17,10 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.Calendar;
 
 import org.junit.After;
@@ -40,7 +36,6 @@ import org.springframework.web.context.WebApplicationContext;
 import dbmanagement.UsersRepository;
 import domain.Agent;
 import main.Application;
-import services.ParticipantsService;
 
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -48,9 +43,6 @@ public class ParticipantsDataControllerTest {
 
 	@Autowired
 	private WebApplicationContext context;
-
-	@Autowired
-	private ParticipantsService service;
 
 	// MockMvc --> Para realizar peticiones y comprobar resultado, usado para
 	// respuestas con informacion json.

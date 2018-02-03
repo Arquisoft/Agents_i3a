@@ -12,7 +12,6 @@
 package domain;
 
 import java.io.IOException;
-import java.util.Date;
 
 import org.bson.types.ObjectId;
 import org.jasypt.util.password.StrongPasswordEncryptor;
