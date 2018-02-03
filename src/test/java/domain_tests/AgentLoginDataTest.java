@@ -34,7 +34,7 @@ public class AgentLoginDataTest {
 		test.setLogin("hola1");
 		test.setPassword("holaPassword");
 		
-		test2 = new AgentLoginData("Hola2", "Hola2Password");
+		test2 = new AgentLoginData("Hola2", "Hola2Password", 1);
 	}
 
 	@Test

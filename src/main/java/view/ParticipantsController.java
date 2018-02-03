@@ -55,7 +55,7 @@ public class ParticipantsController {
 	// (clicking in the "Enter" button).
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
 	public String showInfo(Model model, @ModelAttribute AgentLoginData data, HttpSession session) {
-		Agent user = part.getParticipant(data.getLogin(), data.getPassword());
+		Agent user = part.getParticipant(data.getLogin(), data.getPassword(), data.getKind());
 		if (user == null) {
 			throw new UserNotFoundException();
 		} else {

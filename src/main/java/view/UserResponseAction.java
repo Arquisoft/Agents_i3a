@@ -35,7 +35,7 @@ public class UserResponseAction {
     }
 
     public ResponseEntity<AgentInfo> execute(AgentLoginData info) {
-	Agent user = part.getParticipant(info.getLogin(), info.getPassword());
+	Agent user = part.getParticipant(info.getLogin(), info.getPassword(), info.getKind());
 	AgentInfoAdapter data = new AgentInfoAdapter(user);
 	if (user == null) {
 	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
