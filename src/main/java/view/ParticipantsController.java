@@ -1,21 +1,39 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package view;
+
+import javax.servlet.http.HttpSession;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
-import org.springframework.web.bind.annotation.*;
 import services.ParticipantsService;
-import util.JasyptEncryptor;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-
-import javax.servlet.http.HttpSession;
 
 /**
- * Created by Nicolás on 08/02/2017.
  * 
+ * Instance of ParticipantsController
+ *
+ * @author Nicolás
+ * @since 08/02/2017
  */
 @Controller
 public class ParticipantsController {
@@ -63,9 +81,8 @@ public class ParticipantsController {
 	@RequestMapping(value = "/userChangePassword", method = RequestMethod.POST)
 	public String changePassword(Model model, @RequestParam String password, @RequestParam String newPassword,
 			@RequestParam String newPasswordConfirm, HttpSession session) {
-		JasyptEncryptor encryptor = new JasyptEncryptor();
 		User loggedUser = (User) session.getAttribute("user");
-		if (encryptor.checkPassword(password, loggedUser.getPassword()) && newPassword.equals(newPasswordConfirm)) {
+		if (new StrongPasswordEncryptor().checkPassword(password, loggedUser.getPassword()) && newPassword.equals(newPasswordConfirm)) {
 			part.updateInfo(loggedUser, newPassword);
 			return "data";
 		}

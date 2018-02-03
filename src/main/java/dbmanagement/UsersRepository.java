@@ -1,20 +1,47 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package dbmanagement;
 
-import domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import domain.User;
+
 /**
- * Created by Damian on 06/02/2017. Repository interface from the
+ * Repository interface from the
  * <a href="https://spring.io/guides/gs/accessing-data-mongodb/">MongoDB Spring
  * API</a>
+ * 
+ * @author Damian.
+ * @since 06/02/2017
  */
-
 @Repository
 public interface UsersRepository extends MongoRepository<User, ObjectId> {
 
-	User findByEmail(String email);
+    /**
+     * Find a user by its email address.
+     * 
+     * @param email address of the user to look for.
+     * @return the user if exists, null otherwise.
+     */
+    User findByEmail(String email);
 
-	User findByEmailAndPassword(String email, String password);
+    /**
+     * Find a user by its email and password.
+     * 
+     * @param email of the user to look for.
+     * @param password of the user to look for.
+     * @return the user if login data is correct, null otherwise.
+     */
+    User findByEmailAndPassword(String email, String password);
 }

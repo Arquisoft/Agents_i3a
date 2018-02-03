@@ -1,3 +1,14 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package view_tests;
 
 import static org.hamcrest.Matchers.is;
@@ -27,7 +38,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import dbmanagement.UsersRepository;
-import domain.Kind;
 import domain.User;
 import main.Application;
 import services.ParticipantsService;
@@ -53,7 +63,6 @@ public class ParticipantsDataControllerTest {
 
 	private User maria;
 	private String plainPassword;
-	private int mariaAge;
 
 	@Before
 	public void setUp() throws Exception {
@@ -68,13 +77,9 @@ public class ParticipantsDataControllerTest {
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		plainPassword = "pass14753";
-		maria = new User("Maria", "10N30E", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158", Kind.PERSON);
+		maria = new User("Maria", "10N30E", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158", 1);
 		repo.insert(maria);
 		
-		mariaAge = Period.between(
-				LocalDateTime.ofInstant(maria.getDateOfBirth().toInstant(), ZoneId.systemDefault()).toLocalDate(),
-				LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).toLocalDate())
-				.getYears();
 	}
 
 	@After
@@ -95,7 +100,7 @@ public class ParticipantsDataControllerTest {
 				.andExpect(jsonPath("$.id", is(maria.getUserId())))
 				.andExpect(jsonPath("$.location", is(maria.getLocation())))
 				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind())))
 				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 	}
 
@@ -113,7 +118,7 @@ public class ParticipantsDataControllerTest {
 				.andExpect(jsonPath("$.id", is(maria.getUserId())))
 				.andExpect(jsonPath("$.location", is(maria.getLocation())))
 				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind())))
 				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 	}
 
@@ -167,7 +172,7 @@ public class ParticipantsDataControllerTest {
 				.andExpect(jsonPath("$.id", is(maria.getUserId())))
 				.andExpect(jsonPath("$.location", is(maria.getLocation())))
 				.andExpect(jsonPath("$.email", is(maria.getEmail())))
-				.andExpect(jsonPath("$.kind", is(maria.getKind().toString())))
+				.andExpect(jsonPath("$.kind", is(maria.getKind())))
 				.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 		
 		

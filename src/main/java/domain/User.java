@@ -1,17 +1,33 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package domain;
 
+import java.io.IOException;
+import java.util.Date;
+
 import org.bson.types.ObjectId;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import util.JasyptEncryptor;
-
-import java.util.Date;
+import Foundation.CSVFile;
+import Foundation.URL;
 
 /**
- * Created by Damian on 06/02/2017.
+ * Instance of the user.
+ * 
+ * @author Damian.
+ * @since 06/02/2017
  */
-
 @Document(collection = "users")
 public class User {
 
@@ -26,7 +42,7 @@ public class User {
     private String nationality;
     private String userId;
     private String location;
-    private Kind kind;
+    private int kindCode;
 
     User() {
 
@@ -35,28 +51,28 @@ public class User {
     public User(String name, String email, String password) {
 	this.name = name;
 	this.email = email;
-	this.password = encryptPass(password);
+	setPassword(password);
     }
 
-    public User(String name, String location, String email, String password,
-	    Date dateOfBirth, String address, String nationality, String userId,
-	    Kind kind) {
+    public User(String name, String location, String email, String password, Date dateOfBirth, String address,
+	    String nationality, String userId, int kindCode) throws IOException {
 	this(name, email, password);
 	this.dateOfBirth = dateOfBirth;
 	this.address = address;
 	this.nationality = nationality;
 	this.location = location;
 	this.userId = userId;
-	this.kind = kind;
+	this.kindCode = kindCode;
+	setKindCode(kindCode);
     }
 
     @Override
     public String toString() {
-	return "User{" + "name='" + name + '\'' + ", lastName='" + location
-		+ '\'' + ", email='" + email + '\'' + ", password='" + password
-		+ '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='"
-		+ address + '\'' + ", nationality='" + nationality + '\''
-		+ ", id='" + userId + '\'' + ", kind='" + kind + '\'' + ", kindcode=" + kind.getValue() +'}';
+	return "User{" + "name='" + name + '\'' + ", lastName='" + location + '\'' + ", email='" + email + '\''
+		+ ", password='" + password + '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='" + address
+		+ '\'' + ", nationality='" + nationality + '\'' + ", id='" + userId + '\'' + ", kind='"
+		+ getKind()
+		+ '\'' + ", kindcode=" + kindCode + '}';
     }
 
     @Override
@@ -77,18 +93,30 @@ public class User {
 	return userId.hashCode();
     }
 
+    /**
+     * @return the name of the user.
+     */
     public String getName() {
 	return name;
     }
 
+    /**
+     * @return the email of the user.
+     */
     public String getEmail() {
 	return email;
     }
 
+    /**
+     * @return the password of the user.
+     */
     public String getPassword() {
 	return password;
     }
 
+    /**
+     * @return the date of bir... to remove....
+     */
     public Date getDateOfBirth() {
 	return new Date(dateOfBirth.getTime());
     }
@@ -101,6 +129,9 @@ public class User {
 	return nationality;
     }
 
+    /**
+     * @return get the user id.
+     */
     public String getUserId() {
 	return userId;
     }
@@ -114,7 +145,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-	this.password = encryptPass(password);
+	this.password =  new StrongPasswordEncryptor().encryptPassword(password);
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
@@ -137,22 +168,31 @@ public class User {
 	this.location = location;
     }
 
-    public Kind getKind() {
-        return kind;
+    /**
+     * Gets the kind of user as a plain text. that will depend from a master csv file.
+     * 
+     * @return the kind of user as a plain text. that will depend from a master csv file.
+     */
+    public String getKind() {
+	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
     }
 
-    public int getKindCode(){
-	return kind.getValue();
+    /**
+     * Gives the kind of user as a code (int type).
+     * 
+     * @return the kind of user as a code (int type).
+     */
+    public int getKindCode() {
+	return kindCode;
     }
 
-    public void setKind(Kind kind) {
-        this.kind = kind;
-    }
-
-
-    private String encryptPass(String password) {
-	JasyptEncryptor encryptor = new JasyptEncryptor();
-	return encryptor.encryptPassword(password);
+    /**
+     * Sets the kind of user from a code.
+     * 
+     * @param kindCode to set to the user.
+     */
+    public void setKindCode(int kindCode) {
+	this.kindCode = kindCode;
     }
 
 }

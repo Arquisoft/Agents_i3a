@@ -4,8 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.uniovi.asw</groupId>
-	<artifactId>participants_i2b</artifactId>
-	<name>participants_i2b</name>
+	<name>agents_i3a</name>
 	<version>0.0.1</version>
 
 	<parent>
@@ -15,6 +14,12 @@
 	</parent>
 	
 	<dependencies>
+		<dependency>
+	    		<groupId>com.github.computer-engineering-uniovi</groupId>
+	    		<artifactId>swift</artifactId>
+	    		<version>1.1-beta</version>
+		</dependency>
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -71,7 +76,6 @@
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
             <artifactId>jersey-spring3</artifactId>
-            <version>2.23.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -96,6 +100,12 @@
             </exclusions>
         </dependency>
 
+		<!-- Apache commons-csv -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-csv</artifactId>
+		    <version>1.5</version>
+		</dependency>
 
 
 	</dependencies>
@@ -189,6 +199,10 @@
 			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -198,4 +212,5 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<artifactId>agents_i3a</artifactId>
 </project>

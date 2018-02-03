@@ -1,19 +1,33 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package services;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import dbmanagement.Database;
 import domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import util.JasyptEncryptor;
 
 /**
- * Created by Nicolás on 14/02/2017.
+ * Instance of PartipantsServiceImpl
+ *
+ * @author Nicolás
+ * @version
  */
 @Service
 public class PartipantsServiceImpl implements ParticipantsService {
 
 	private final Database dat;
-	private final JasyptEncryptor encryptor = new JasyptEncryptor();
 
 	@Autowired
 	PartipantsServiceImpl(Database dat) {
@@ -23,7 +37,7 @@ public class PartipantsServiceImpl implements ParticipantsService {
 	@Override
 	public User getParticipant(String email, String password) {
 		User user = dat.getParticipant(email);
-		if (user != null && encryptor.checkPassword(password, user.getPassword()))
+		if (user != null && new StrongPasswordEncryptor().checkPassword(password, user.getPassword()))
 			return user;
 		else
 			return null;

@@ -1,8 +1,21 @@
+/*
+ * This source file is part of the Agents_i3a open source project.
+ *
+ * Copyright (c) 2017 Agents_i3a project authors.
+ * Licensed under MIT License.
+ *
+ * See /LICENSE for license information.
+ * 
+ * This class is based on the AlbUtil project.
+ * 
+ */
 package database_tests;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,12 +27,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import dbmanagement.Database;
 import dbmanagement.UsersRepository;
-import domain.Kind;
 import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
-import util.JasyptEncryptor;
 
 /**
  * Created by Nicolás on 15/02/2017.
@@ -48,11 +59,16 @@ public class DatabaseTest {
 	 * "9gvHm9TI57Z9ZW8/tTu9Nk10NDZayLIgKcFT8WdCVXPeY5gF57AFjS/l4nKNY1Jq",
 	 * "dateOfBirth" : ISODate("1982-12-27T23:00:00.000Z"), "address" : "Hallo",
 	 * "nationality" : "Core", "userId" : "321", "email" : "asd", "kind": "Person", kindCode:1 }
+	 * 
+	 * Also a resources/master.csv file is needed with the following rows:
+	 * 1; Person
+	 * 2; Entity
+	 * 
 	 */
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		testedUser = new User("Luis", "48.2S35E", "LGracia@gmail.com", "Luis123", new Date(), "Calle alfonso", "Spain",
-				"147",Kind.PERSON);
+				"147",1);
 		repo.insert(testedUser);
 
 		Calendar cal = Calendar.getInstance();
@@ -60,7 +76,7 @@ public class DatabaseTest {
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		user2cal = cal;
-		testedUser2 = new User("Maria", "10N30E", "asd", "pass14753", cal.getTime(), "Hallo", "Core", "158",Kind.PERSON);
+		testedUser2 = new User("Maria", "10N30E", "asd", "pass14753", cal.getTime(), "Hallo", "Core", "158",1);
 		repo.insert(testedUser2);
 	}
 
@@ -87,10 +103,9 @@ public class DatabaseTest {
 		// It should be previously encoded if the DB is given so this may be changed.
 		User user = dat.getParticipant("LGracia@gmail.com");
 		user.setPassword("confidencial");
-		JasyptEncryptor encryptor = new JasyptEncryptor();
 		dat.updateInfo(user);
 		User userAfter = dat.getParticipant("LGracia@gmail.com");
-		Assert.assertTrue(encryptor.checkPassword("confidencial", userAfter.getPassword())); // They should be the same
+		Assert.assertTrue(new StrongPasswordEncryptor().checkPassword("confidencial", userAfter.getPassword())); // They should be the same
 																								// when we introduce the
 																								// password.
 		Assert.assertEquals(user, userAfter); // They should be the same user by the equals.
@@ -98,7 +113,7 @@ public class DatabaseTest {
 	}
 
 	@Test
-	public void testUpdateInfoAndAdaptation() {
+	public void testUpdateInfoAndAdaptation() throws IOException{
 		User user = dat.getParticipant("asd");
 
 		Assert.assertEquals("Maria", user.getName());
@@ -108,8 +123,8 @@ public class DatabaseTest {
 		Assert.assertEquals("Core", user.getNationality());
 		Assert.assertEquals("158", user.getUserId());
 		Assert.assertEquals("asd", user.getEmail());
-		Assert.assertEquals(Kind.PERSON, user.getKind());
-		Assert.assertEquals(Kind.PERSON.getValue(), user.getKindCode());
+		Assert.assertEquals("Person", user.getKind());
+		Assert.assertEquals(1, user.getKindCode());
 
 		UserInfoAdapter userAdapter = new UserInfoAdapter(user);
 
@@ -119,11 +134,12 @@ public class DatabaseTest {
 		Assert.assertEquals(user.getLocation(), userInfo.getLocation());
 		Assert.assertEquals(user.getEmail(), userInfo.getEmail());
 		Assert.assertEquals(user.getUserId(), userInfo.getId());
-		Assert.assertEquals("PERSON", userInfo.getKind());
+		Assert.assertEquals("Person", userInfo.getKind());
 		Assert.assertEquals(1, userInfo.getKindCode());
 
 		user.setName("Pepa");
 		user.setLocation("45N35.5W");
+		user.setKindCode(2);
 		
 		dat.updateInfo(user);
 		User updatedUser = dat.getParticipant("asd");
@@ -134,8 +150,8 @@ public class DatabaseTest {
 		Assert.assertEquals("Core", updatedUser.getNationality());
 		Assert.assertEquals("158", updatedUser.getUserId());
 		Assert.assertEquals("asd", updatedUser.getEmail());
-		Assert.assertEquals("PERSON", userInfo.getKind());
-		Assert.assertEquals(1, userInfo.getKindCode());
+		Assert.assertEquals("Entity", updatedUser.getKind());
+		Assert.assertEquals(2, updatedUser.getKindCode());
 
 	}
 
