@@ -11,8 +11,6 @@
  */
 package domain;
 
-import java.io.IOException;
-
 import org.bson.types.ObjectId;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
@@ -50,7 +48,7 @@ public class Agent {
 	setPassword(password);
     }
 
-    public Agent(String name, String location, String email, String password, String userId, int kindCode) throws IOException {
+    public Agent(String name, String location, String email, String password, String userId, int kindCode) {
 	this(name, email, password);
 	this.location = location;
 	this.userId = userId;
@@ -60,10 +58,14 @@ public class Agent {
 
     @Override
     public String toString() {
-	return "User{" + "name='" + name + '\'' + ", lastName='" + location + '\'' + ", email='" + email + '\''
-		+ ", password='" + password + '\'' + ", id='" + userId + '\'' + ", kind='"
-		+ getKind()
-		+ '\'' + ", kindcode=" + kindCode + '}';
+	return "{" 
+		+ "name='" + name + '\'' 
+		+ ",location='" + location + '\'' 
+		+ ",email='" + email + '\''
+		+ ",id='" + userId + '\'' 
+		+ ",kind='" + getKind() + '\'' 
+		+ ",kindCode='"+ kindCode + '\'' 
+		+ '}';
     }
 
     @Override
