@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author Nicolás.
  * @since 15/02/2017
  */
-public class UserInfo implements Serializable {
+public class AgentInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String name;
@@ -32,11 +32,11 @@ public class UserInfo implements Serializable {
     private String kind;
     private int kindCode;
 
-    UserInfo() {
+    AgentInfo() {
 
     }
 
-    public UserInfo(String name, String location, String email, String id, String kind, int kindCode) {
+    public AgentInfo(String name, String location, String email, String id, String kind, int kindCode) {
 	this.name = name;
 	this.location = location;
 	this.email = email;
@@ -113,7 +113,7 @@ public class UserInfo implements Serializable {
 	if (o == null || getClass() != o.getClass())
 	    return false;
 
-	UserInfo userInfo = (UserInfo) o;
+	AgentInfo userInfo = (AgentInfo) o;
 
 	return id.equals(userInfo.id);
     }

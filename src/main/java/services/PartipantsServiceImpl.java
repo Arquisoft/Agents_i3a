@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dbmanagement.Database;
-import domain.User;
+import domain.Agent;
 
 /**
  * Instance of PartipantsServiceImpl
@@ -35,8 +35,8 @@ public class PartipantsServiceImpl implements ParticipantsService {
 	}
 
 	@Override
-	public User getParticipant(String email, String password) {
-		User user = dat.getParticipant(email);
+	public Agent getParticipant(String email, String password) {
+		Agent user = dat.getParticipant(email);
 		if (user != null && new StrongPasswordEncryptor().checkPassword(password, user.getPassword()))
 			return user;
 		else
@@ -44,7 +44,7 @@ public class PartipantsServiceImpl implements ParticipantsService {
 	}
 
 	@Override
-	public void updateInfo(User user, String newPassword) {
+	public void updateInfo(Agent user, String newPassword) {
 		// It is not necessary, done by the domain class itself.
 		user.setPassword(newPassword);
 		dat.updateInfo(user);

@@ -29,7 +29,7 @@ import Foundation.URL;
  * @since 06/02/2017
  */
 @Document(collection = "users")
-public class User {
+public class Agent {
 
     @Id
     private ObjectId id;
@@ -37,29 +37,22 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private Date dateOfBirth;
-    private String address;
-    private String nationality;
     private String userId;
     private String location;
     private int kindCode;
 
-    User() {
+    Agent() {
 
     }
 
-    public User(String name, String email, String password) {
+    public Agent(String name, String email, String password) {
 	this.name = name;
 	this.email = email;
 	setPassword(password);
     }
 
-    public User(String name, String location, String email, String password, Date dateOfBirth, String address,
-	    String nationality, String userId, int kindCode) throws IOException {
+    public Agent(String name, String location, String email, String password, String userId, int kindCode) throws IOException {
 	this(name, email, password);
-	this.dateOfBirth = dateOfBirth;
-	this.address = address;
-	this.nationality = nationality;
 	this.location = location;
 	this.userId = userId;
 	this.kindCode = kindCode;
@@ -69,8 +62,7 @@ public class User {
     @Override
     public String toString() {
 	return "User{" + "name='" + name + '\'' + ", lastName='" + location + '\'' + ", email='" + email + '\''
-		+ ", password='" + password + '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='" + address
-		+ '\'' + ", nationality='" + nationality + '\'' + ", id='" + userId + '\'' + ", kind='"
+		+ ", password='" + password + '\'' + ", id='" + userId + '\'' + ", kind='"
 		+ getKind()
 		+ '\'' + ", kindcode=" + kindCode + '}';
     }
@@ -82,7 +74,7 @@ public class User {
 	if (o == null || getClass() != o.getClass())
 	    return false;
 
-	User user = (User) o;
+	Agent user = (Agent) o;
 
 	return userId.equals(user.userId);
 
@@ -115,21 +107,6 @@ public class User {
     }
 
     /**
-     * @return the date of bir... to remove....
-     */
-    public Date getDateOfBirth() {
-	return new Date(dateOfBirth.getTime());
-    }
-
-    public String getAddress() {
-	return address;
-    }
-
-    public String getNationality() {
-	return nationality;
-    }
-
-    /**
      * @return get the user id.
      */
     public String getUserId() {
@@ -146,18 +123,6 @@ public class User {
 
     public void setPassword(String password) {
 	this.password =  new StrongPasswordEncryptor().encryptPassword(password);
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-	this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setAddress(String address) {
-	this.address = address;
-    }
-
-    public void setNationality(String nationality) {
-	this.nationality = nationality;
     }
 
     public String getLocation() {

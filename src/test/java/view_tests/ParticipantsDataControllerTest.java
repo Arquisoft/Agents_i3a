@@ -38,7 +38,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import dbmanagement.UsersRepository;
-import domain.User;
+import domain.Agent;
 import main.Application;
 import services.ParticipantsService;
 
@@ -61,7 +61,7 @@ public class ParticipantsDataControllerTest {
 
 	private MockHttpSession session;
 
-	private User maria;
+	private Agent maria;
 	private String plainPassword;
 
 	@Before
@@ -77,7 +77,7 @@ public class ParticipantsDataControllerTest {
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		plainPassword = "pass14753";
-		maria = new User("Maria", "10N30E", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158", 1);
+		maria = new Agent("Maria", "10N30E", "asd", plainPassword, "158", 1);
 		repo.insert(maria);
 		
 	}
