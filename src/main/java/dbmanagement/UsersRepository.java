@@ -31,7 +31,8 @@ public interface UsersRepository extends MongoRepository<Agent, ObjectId> {
     /**
      * Find a user by its email address.
      * 
-     * @param email address of the user to look for.
+     * @param email
+     *            address of the user to look for.
      * @return the user if exists, null otherwise.
      */
     Agent findByEmail(String email);
@@ -39,8 +40,10 @@ public interface UsersRepository extends MongoRepository<Agent, ObjectId> {
     /**
      * Find a user by its email and password.
      * 
-     * @param email of the user to look for.
-     * @param password of the user to look for.
+     * @param email
+     *            of the user to look for.
+     * @param password
+     *            of the user to look for.
      * @return the user if login data is correct, null otherwise.
      */
     Agent findByEmailAndPassword(String email, String password);

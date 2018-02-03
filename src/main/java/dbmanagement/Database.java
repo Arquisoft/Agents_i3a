@@ -26,14 +26,16 @@ public interface Database {
     /**
      * Updated the information of a given user.
      * 
-     * @param user to update its information.
+     * @param user
+     *            to update its information.
      */
     void updateInfo(Agent user);
 
     /**
      * Gets a participant from its email address.
      * 
-     * @param email of the participant to get.
+     * @param email
+     *            of the participant to get.
      * @return the participant if exists, null otherwise.
      */
     Agent getParticipant(String email);
