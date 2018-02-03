@@ -27,9 +27,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import dbmanagement.Database;
 import dbmanagement.UsersRepository;
-import domain.User;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
+import domain.Agent;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
 import main.Application;
 
 /**
@@ -45,8 +45,8 @@ public class DatabaseTest {
 	private UsersRepository repo;
 
 	// User to use as reference for test
-	private User testedUser;
-	private User testedUser2;
+	private Agent testedUser;
+	private Agent testedUser2;
 	private Calendar user2cal;
 
 	@Autowired
@@ -67,7 +67,7 @@ public class DatabaseTest {
 	 */
 	@Before
 	public void setUp() throws IOException {
-		testedUser = new User("Luis", "48.2S35E", "LGracia@gmail.com", "Luis123", new Date(), "Calle alfonso", "Spain",
+		testedUser = new Agent("Luis", "48.2S35E", "LGracia@gmail.com", "Luis123",
 				"147",1);
 		repo.insert(testedUser);
 
@@ -76,7 +76,7 @@ public class DatabaseTest {
 		cal.set(Calendar.MONTH, 1);
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		user2cal = cal;
-		testedUser2 = new User("Maria", "10N30E", "asd", "pass14753", cal.getTime(), "Hallo", "Core", "158",1);
+		testedUser2 = new Agent("Maria", "10N30E", "asd", "pass14753", "158",1);
 		repo.insert(testedUser2);
 	}
 
@@ -87,24 +87,12 @@ public class DatabaseTest {
 	}
 
 	@Test
-	public void testGetParticipant() {
-		// It should be previously encoded if the DB is given so this may be changed.
-		User user = dat.getParticipant("LGracia@gmail.com");
-		user.setNationality("USA");
-		Assert.assertEquals(user.getNationality(), "USA");
-		Assert.assertNotEquals(testedUser.getNationality(), user.getNationality());
-		User DBUser = dat.getParticipant("LGracia@gmail.com"); // just in case, same as before.
-		Assert.assertNotEquals(user.getNationality(), DBUser.getNationality()); // Should be different from as we
-																				// changed a transient one.
-	}
-
-	@Test
 	public void testUpdateInfoWithPassword() {
 		// It should be previously encoded if the DB is given so this may be changed.
-		User user = dat.getParticipant("LGracia@gmail.com");
+		Agent user = dat.getParticipant("LGracia@gmail.com");
 		user.setPassword("confidencial");
 		dat.updateInfo(user);
-		User userAfter = dat.getParticipant("LGracia@gmail.com");
+		Agent userAfter = dat.getParticipant("LGracia@gmail.com");
 		Assert.assertTrue(new StrongPasswordEncryptor().checkPassword("confidencial", userAfter.getPassword())); // They should be the same
 																								// when we introduce the
 																								// password.
@@ -114,21 +102,18 @@ public class DatabaseTest {
 
 	@Test
 	public void testUpdateInfoAndAdaptation() throws IOException{
-		User user = dat.getParticipant("asd");
+		Agent user = dat.getParticipant("asd");
 
 		Assert.assertEquals("Maria", user.getName());
 		Assert.assertEquals("10N30E", user.getLocation());
-		Assert.assertEquals(user2cal.getTime(), user.getDateOfBirth());
-		Assert.assertEquals("Hallo", user.getAddress());
-		Assert.assertEquals("Core", user.getNationality());
 		Assert.assertEquals("158", user.getUserId());
 		Assert.assertEquals("asd", user.getEmail());
 		Assert.assertEquals("Person", user.getKind());
 		Assert.assertEquals(1, user.getKindCode());
 
-		UserInfoAdapter userAdapter = new UserInfoAdapter(user);
+		AgentInfoAdapter userAdapter = new AgentInfoAdapter(user);
 
-		UserInfo userInfo = userAdapter.userToInfo();
+		AgentInfo userInfo = userAdapter.userToInfo();
 
 		Assert.assertEquals(user.getName(), userInfo.getName());
 		Assert.assertEquals(user.getLocation(), userInfo.getLocation());
@@ -142,12 +127,9 @@ public class DatabaseTest {
 		user.setKindCode(2);
 		
 		dat.updateInfo(user);
-		User updatedUser = dat.getParticipant("asd");
+		Agent updatedUser = dat.getParticipant("asd");
 		Assert.assertEquals("Pepa", updatedUser.getName());
 		Assert.assertEquals("45N35.5W", updatedUser.getLocation());
-		Assert.assertEquals(user2cal.getTime(), updatedUser.getDateOfBirth());
-		Assert.assertEquals("Hallo", updatedUser.getAddress());
-		Assert.assertEquals("Core", updatedUser.getNationality());
 		Assert.assertEquals("158", updatedUser.getUserId());
 		Assert.assertEquals("asd", updatedUser.getEmail());
 		Assert.assertEquals("Entity", updatedUser.getKind());

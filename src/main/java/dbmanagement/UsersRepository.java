@@ -15,7 +15,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.User;
+import domain.Agent;
 
 /**
  * Repository interface from the
@@ -26,7 +26,7 @@ import domain.User;
  * @since 06/02/2017
  */
 @Repository
-public interface UsersRepository extends MongoRepository<User, ObjectId> {
+public interface UsersRepository extends MongoRepository<Agent, ObjectId> {
 
     /**
      * Find a user by its email address.
@@ -34,7 +34,7 @@ public interface UsersRepository extends MongoRepository<User, ObjectId> {
      * @param email address of the user to look for.
      * @return the user if exists, null otherwise.
      */
-    User findByEmail(String email);
+    Agent findByEmail(String email);
 
     /**
      * Find a user by its email and password.
@@ -43,5 +43,5 @@ public interface UsersRepository extends MongoRepository<User, ObjectId> {
      * @param password of the user to look for.
      * @return the user if login data is correct, null otherwise.
      */
-    User findByEmailAndPassword(String email, String password);
+    Agent findByEmailAndPassword(String email, String password);
 }

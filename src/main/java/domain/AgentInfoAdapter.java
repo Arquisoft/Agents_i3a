@@ -30,16 +30,16 @@ package domain;
  * @author Nicolás
  * @since 15/02/2017
  */
-public class UserInfoAdapter {
+public class AgentInfoAdapter {
 
-    private User user;
+    private Agent user;
 
-    public UserInfoAdapter(User user) {
+    public AgentInfoAdapter(Agent user) {
 	this.user = user;
     }
 
-    public UserInfo userToInfo() {
-	return new UserInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind(),
+    public AgentInfo userToInfo() {
+	return new AgentInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind(),
 		user.getKindCode());
     }
 }

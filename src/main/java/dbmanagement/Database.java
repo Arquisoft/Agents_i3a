@@ -11,7 +11,7 @@
  */
 package dbmanagement;
 
-import domain.User;
+import domain.Agent;
 
 /**
  * Interface service for the database. Current implementation uses Spring Boot
@@ -28,7 +28,7 @@ public interface Database {
      * 
      * @param user to update its information.
      */
-    void updateInfo(User user);
+    void updateInfo(Agent user);
 
     /**
      * Gets a participant from its email address.
@@ -36,6 +36,6 @@ public interface Database {
      * @param email of the participant to get.
      * @return the participant if exists, null otherwise.
      */
-    User getParticipant(String email);
+    Agent getParticipant(String email);
 
 }
