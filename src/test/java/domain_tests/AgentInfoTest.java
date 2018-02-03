@@ -35,8 +35,7 @@ public class AgentInfoTest {
 
     @Before
     public void setUp() throws IOException {
-	testedUser = new AgentInfo("Victor", "30N45E", "ejemplo@correo.com",
-		"asd", 1);
+	testedUser = new AgentInfo("Victor", "30N45E", "ejemplo@correo.com", "asd", 1);
     }
 
     @Test
@@ -76,7 +75,7 @@ public class AgentInfoTest {
 	test.append(", kind='").append("Person").append('\'');
 	test.append(", kindCode=").append(1);
 	test.append('}');
-	
+
 	String correct = test.toString();
 	Assert.assertEquals(correct, testedUser.toString());
     }
@@ -88,8 +87,7 @@ public class AgentInfoTest {
 
     @Test
     public void equalsTest() {
-	AgentInfo other = new AgentInfo("Juan", "20N45E", "ejemplo3@correo.com",
-		"rerere", 1);
+	AgentInfo other = new AgentInfo("Juan", "20N45E", "ejemplo3@correo.com", "rerere", 1);
 
 	Assert.assertTrue(testedUser.equals(testedUser));
 

@@ -19,17 +19,17 @@ import domain.Agent;
 @Service
 public class MongoDatabase implements Database {
 
-	@Autowired
-	private UsersRepository users;
+    @Autowired
+    private UsersRepository users;
 
-	@Override
-	public void updateInfo(Agent user) {
-		users.save(user);
-	}
+    @Override
+    public void updateInfo(Agent user) {
+	users.save(user);
+    }
 
-	@Override
-	public Agent getParticipant(String email) {
-		return users.findByEmail(email);
-	}
+    @Override
+    public Agent getParticipant(String email) {
+	return users.findByEmail(email);
+    }
 
 }

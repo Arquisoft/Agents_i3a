@@ -136,24 +136,24 @@ public class AgentTest {
 	jorge.setKindCode(1);
 	assertEquals("Person", jorge.getKind());
 	assertEquals(1, jorge.getKindCode());
-	
+
 	CSVFile previous = CSVFile.of(new URL("src/main/resources/master.csv"), ",");
 	CSVFile testFile = new CSVFile(new URL("src/main/resources/master.csv"));
 	testFile.setSeparator(",");
-	String[] person = {"Person"}, entity = {"Entity"}, sensor = {"Sensor"}, iphone = {"iPhone"};
+	String[] person = { "Person" }, entity = { "Entity" }, sensor = { "Sensor" }, iphone = { "iPhone" };
 	testFile.getContent().put("1", person);
 	testFile.getContent().put("2", entity);
 	testFile.getContent().put("3", sensor);
 	testFile.getContent().put("4", iphone);
 	testFile.save();
-	
+
 	jorge.setKindCode(4);
 	assertEquals("iPhone", jorge.getKind());
 	testFile.getContent().replace("1", entity);
 	testFile.getContent().replace("2", person);
 	testFile.save();
 	assertEquals("Entity", nico.getKind());
-	
+
 	previous.save();
 
     }
@@ -161,19 +161,18 @@ public class AgentTest {
     @Test
     public void toStringTest() {
 	nico.setKindCode(1);
-	assertEquals("{" + "name='" + nico.getName() + "'," + "location='" + nico.getLocation() + "',"
-		+ "email='" + nico.getEmail() + "'," + "id='" + nico.getUserId() + "'," + "kind='" + nico.getKind()
-		+ "'," + "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
+	assertEquals("{" + "name='" + nico.getName() + "'," + "location='" + nico.getLocation() + "'," + "email='"
+		+ nico.getEmail() + "'," + "id='" + nico.getUserId() + "'," + "kind='" + nico.getKind() + "',"
+		+ "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
     }
 
     @Test
     public void equalsTest() {
-	Agent copyOfNico = new Agent(nico.getName(), nico.getLocation(), nico.getEmail(), nico.getPassword(),
-		"111", nico.getKindCode());
+	Agent copyOfNico = new Agent(nico.getName(), nico.getLocation(), nico.getEmail(), nico.getPassword(), "111",
+		nico.getKindCode());
 	Agent anotherCopyOfNico = new Agent(nico.getName(), nico.getLocation(), nico.getEmail(), nico.getPassword(),
 		"111", nico.getKindCode());
-	
-	
+
 	assertEquals(true, anotherCopyOfNico.equals(copyOfNico));
     }
 

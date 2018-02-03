@@ -24,28 +24,31 @@ import domain.Agent;
  * @author Nicolás
  * @version
  */
-@Service public class PartipantsServiceImpl implements ParticipantsService {
+@Service
+public class PartipantsServiceImpl implements ParticipantsService {
 
-	private final Database dat;
+    private final Database dat;
 
-	@Autowired PartipantsServiceImpl( Database dat ) {
-		this.dat = dat;
-	}
+    @Autowired
+    PartipantsServiceImpl(Database dat) {
+	this.dat = dat;
+    }
 
-	@Override public Agent getParticipant( String identifier, String password, int kindOfAgent ) {
-		Agent user = dat.getParticipant( identifier );
-		System.out.println( user );
-		if (user != null
-				&& new StrongPasswordEncryptor().checkPassword( password, user.getPassword() )
-				&& user.getKindCode() == kindOfAgent)
-			return user;
-		else
-			return null;
-	}
+    @Override
+    public Agent getParticipant(String identifier, String password, int kindOfAgent) {
+	Agent user = dat.getParticipant(identifier);
+	System.out.println(user);
+	if (user != null && new StrongPasswordEncryptor().checkPassword(password, user.getPassword())
+		&& user.getKindCode() == kindOfAgent)
+	    return user;
+	else
+	    return null;
+    }
 
-	@Override public void updateInfo( Agent user, String newPassword ) {
-		// It is not necessary, done by the domain class itself.
-		user.setPassword( newPassword );
-		dat.updateInfo( user );
-	}
+    @Override
+    public void updateInfo(Agent user, String newPassword) {
+	// It is not necessary, done by the domain class itself.
+	user.setPassword(newPassword);
+	dat.updateInfo(user);
+    }
 }
