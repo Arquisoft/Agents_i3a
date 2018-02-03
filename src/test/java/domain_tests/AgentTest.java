@@ -11,14 +11,17 @@
  */
 package domain_tests;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Calendar;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import Foundation.CSVFile;
+import Foundation.URL;
 import domain.Agent;
 
 /**
@@ -50,44 +53,44 @@ public class AgentTest {
 
     @Test
     public void firstNameTest() {
-	Assert.assertEquals("Nicolás", nico.getName());
-	Assert.assertEquals("Jorge", jorge.getName());
-	Assert.assertEquals("Damian", damian.getName());
+	assertEquals("Nicolás", nico.getName());
+	assertEquals("Jorge", jorge.getName());
+	assertEquals("Damian", damian.getName());
 
 	nico.setName("Antonio");
-	Assert.assertEquals("Antonio", nico.getName());
+	assertEquals("Antonio", nico.getName());
 
 	jorge.setName("Pepe");
-	Assert.assertEquals("Pepe", jorge.getName());
+	assertEquals("Pepe", jorge.getName());
 
 	damian.setName("Roberto");
-	Assert.assertEquals("Roberto", damian.getName());
+	assertEquals("Roberto", damian.getName());
     }
 
     @Test
     public void locationTest() {
 
 	nico.setLocation(jorge.getLocation());
-	Assert.assertEquals("45N30E", nico.getLocation());
+	assertEquals("45N30E", nico.getLocation());
 
 	jorge.setLocation(damian.getLocation());
-	Assert.assertEquals("45S30W", jorge.getLocation());
+	assertEquals("45S30W", jorge.getLocation());
 
 	damian.setLocation("30N48E");
-	Assert.assertEquals("30N48E", damian.getLocation());
+	assertEquals("30N48E", damian.getLocation());
     }
 
     @Test
     public void emailTest() {
 
 	nico.setEmail(damian.getEmail());
-	Assert.assertEquals("damian@damianmail.com", nico.getEmail());
+	assertEquals("damian@damianmail.com", nico.getEmail());
 
 	jorge.setEmail("pepe@pepemail.com");
-	Assert.assertEquals("pepe@pepemail.com", jorge.getEmail());
+	assertEquals("pepe@pepemail.com", jorge.getEmail());
 
 	damian.setEmail(jorge.getEmail());
-	Assert.assertEquals("pepe@pepemail.com", damian.getEmail());
+	assertEquals("pepe@pepemail.com", damian.getEmail());
     }
 
     @Test
@@ -97,51 +100,90 @@ public class AgentTest {
 
 	nico.setPassword("1234");
 
-	Assert.assertTrue(encryptor.checkPassword("1234", nico.getPassword()));
+	assertTrue(encryptor.checkPassword("1234", nico.getPassword()));
 
 	jorge.setPassword("abcd");
-	Assert.assertTrue(encryptor.checkPassword("abcd", jorge.getPassword()));
+	assertTrue(encryptor.checkPassword("abcd", jorge.getPassword()));
 
 	damian.setPassword("yay");
-	Assert.assertTrue(encryptor.checkPassword("yay", damian.getPassword()));
+	assertTrue(encryptor.checkPassword("yay", damian.getPassword()));
     }
 
     @Test
     public void nifTest() {
 
-	Assert.assertEquals(null, nico.getUserId());
+	assertEquals(null, nico.getUserId());
 
-	Assert.assertEquals("111111111A", jorge.getUserId());
+	assertEquals("111111111A", jorge.getUserId());
 
-	Assert.assertEquals("222222222B", damian.getUserId());
+	assertEquals("222222222B", damian.getUserId());
     }
 
     @Test
     public void kindTest() throws IOException {
 	nico.setKindCode(1);
-	Assert.assertEquals("Person", nico.getKind());
-	Assert.assertEquals("Entity", jorge.getKind());
-	Assert.assertEquals(2, jorge.getKindCode());
+	assertEquals("Person", nico.getKind());
+	assertEquals("Entity", jorge.getKind());
+	assertEquals(2, jorge.getKindCode());
 
-	Assert.assertEquals("Sensor", damian.getKind());
-	Assert.assertEquals(3, damian.getKindCode());
+	assertEquals("Sensor", damian.getKind());
+	assertEquals(3, damian.getKindCode());
 
 	nico.setKindCode(1);
-	Assert.assertEquals("Person", nico.getKind());
-	Assert.assertEquals(1, nico.getKindCode());
+	assertEquals("Person", nico.getKind());
+	assertEquals(1, nico.getKindCode());
 
 	jorge.setKindCode(1);
-	Assert.assertEquals("Person", jorge.getKind());
-	Assert.assertEquals(1, jorge.getKindCode());
+	assertEquals("Person", jorge.getKind());
+	assertEquals(1, jorge.getKindCode());
+	
+	CSVFile previous = CSVFile.of(new URL("src/main/resources/master.csv"), ",");
+	CSVFile testFile = new CSVFile(new URL("src/main/resources/master.csv"));
+	testFile.setSeparator(",");
+	String[] person = {"Person"}, entity = {"Entity"}, sensor = {"Sensor"}, iphone = {"iPhone"};
+	testFile.getContent().put("1", person);
+	testFile.getContent().put("2", entity);
+	testFile.getContent().put("3", sensor);
+	testFile.getContent().put("4", iphone);
+	testFile.save();
+	
+	jorge.setKindCode(4);
+	assertEquals("iPhone", jorge.getKind());
+	testFile.getContent().replace("1", entity);
+	testFile.getContent().replace("2", person);
+	testFile.save();
+	assertEquals("Entity", nico.getKind());
+	
+	previous.save();
 
+    }
+
+    @Test
+    public void toStringTest() {
+	nico.setKindCode(1);
+	assertEquals("{" + "name='" + nico.getName() + "'," + "location='" + nico.getLocation() + "',"
+		+ "email='" + nico.getEmail() + "'," + "id='" + nico.getUserId() + "'," + "kind='" + nico.getKind()
+		+ "'," + "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
+    }
+
+    @Test
+    public void equalsTest() {
+	Agent copyOfNico = new Agent(nico.getName(), nico.getLocation(), nico.getEmail(), nico.getPassword(),
+		"111", nico.getKindCode());
+	Agent anotherCopyOfNico = new Agent(nico.getName(), nico.getLocation(), nico.getEmail(), nico.getPassword(),
+		"111", nico.getKindCode());
+	
+	
+	assertEquals(true, anotherCopyOfNico.equals(copyOfNico));
     }
 
     @Test
     public void kindCodeTest() {
 
-	Assert.assertEquals(2, jorge.getKindCode());
-
-	Assert.assertEquals(3, damian.getKindCode());
+	jorge.setKindCode(2);
+	assertEquals(2, jorge.getKindCode());
+	damian.setKindCode(3);
+	assertEquals(3, damian.getKindCode());
     }
 
 }
