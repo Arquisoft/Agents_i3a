@@ -1,9 +1,10 @@
 package services;
 
-import dbmanagement.Database;
-import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import dbmanagement.Database;
+import domain.User;
 import util.JasyptEncryptor;
 
 /**
