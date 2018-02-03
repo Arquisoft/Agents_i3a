@@ -12,8 +12,6 @@
 package domain_tests;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
