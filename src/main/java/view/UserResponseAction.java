@@ -1,11 +1,12 @@
 package view;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import services.ParticipantsService;
 
 /**

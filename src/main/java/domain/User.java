@@ -1,12 +1,14 @@
 package domain;
 
+import java.io.IOException;
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import util.CSVReader;
 import util.JasyptEncryptor;
-
-import java.util.Date;
 
 /**
  * Created by Damian on 06/02/2017.
@@ -26,7 +28,9 @@ public class User {
     private String nationality;
     private String userId;
     private String location;
-    private Kind kind;
+    private int kindCode;
+    private String kind;
+    
 
     User() {
 
@@ -40,14 +44,14 @@ public class User {
 
     public User(String name, String location, String email, String password,
 	    Date dateOfBirth, String address, String nationality, String userId,
-	    Kind kind) {
+	    int kindCode) throws IOException {
 	this(name, email, password);
 	this.dateOfBirth = dateOfBirth;
 	this.address = address;
 	this.nationality = nationality;
 	this.location = location;
 	this.userId = userId;
-	this.kind = kind;
+	setKindCode(kindCode);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class User {
 		+ '\'' + ", email='" + email + '\'' + ", password='" + password
 		+ '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='"
 		+ address + '\'' + ", nationality='" + nationality + '\''
-		+ ", id='" + userId + '\'' + ", kind='" + kind + '\'' + ", kindcode=" + kind.getValue() +'}';
+		+ ", id='" + userId + '\'' + ", kind='" + kind + '\'' + ", kindcode=" + kindCode +'}';
     }
 
     @Override
@@ -137,16 +141,17 @@ public class User {
 	this.location = location;
     }
 
-    public Kind getKind() {
+    public String getKind(){
         return kind;
     }
 
     public int getKindCode(){
-	return kind.getValue();
+	return kindCode;
     }
 
-    public void setKind(Kind kind) {
-        this.kind = kind;
+    public void setKindCode(int kindCode) throws IOException {
+        this.kindCode = kindCode;
+        kind = CSVReader.getValueForKind( kindCode );
     }
 
 
@@ -154,5 +159,7 @@ public class User {
 	JasyptEncryptor encryptor = new JasyptEncryptor();
 	return encryptor.encryptPassword(password);
     }
+
+
 
 }
