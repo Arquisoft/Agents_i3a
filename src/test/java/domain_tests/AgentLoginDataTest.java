@@ -26,22 +26,27 @@ import domain.AgentLoginData;
 public class AgentLoginDataTest {
 
 	private AgentLoginData test;
+	private AgentLoginData test2;
 
 	@Before
 	public void setUp() {
 		test = new AgentLoginData();
 		test.setLogin("hola1");
 		test.setPassword("holaPassword");
+		
+		test2 = new AgentLoginData("Hola2", "Hola2Password");
 	}
 
 	@Test
 	public void getLogin() throws Exception {
 		assertEquals("hola1", test.getLogin());
+		assertEquals("Hola2", test2.getLogin());
 	}
 
 	@Test
 	public void getPassword() throws Exception {
 		assertEquals("holaPassword", test.getPassword());
+		assertEquals("Hola2Password", test2.getPassword());
 	}
 
 	@Test
