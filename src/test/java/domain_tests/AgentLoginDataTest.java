@@ -16,20 +16,20 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.UserLoginData;
+import domain.AgentLoginData;
 
 /**
  * Created by Nicolás on 18/02/2017.
  * 
  * Adapter by Víctor on 02/02/2018
  */
-public class UserLoginDataTest {
+public class AgentLoginDataTest {
 
-	private UserLoginData test;
+	private AgentLoginData test;
 
 	@Before
 	public void setUp() {
-		test = new UserLoginData();
+		test = new AgentLoginData();
 		test.setLogin("hola1");
 		test.setPassword("holaPassword");
 	}

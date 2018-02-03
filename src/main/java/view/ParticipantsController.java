@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import domain.User;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
-import domain.UserLoginData;
+import domain.Agent;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
+import domain.AgentLoginData;
 import services.ParticipantsService;
 
 /**
@@ -47,20 +47,20 @@ public class ParticipantsController {
 	// The first page shown will be login.html.
 	@GetMapping(value = "/")
 	public String getParticipantInfo(Model model) {
-		model.addAttribute("userinfo", new UserLoginData());
+		model.addAttribute("userinfo", new AgentLoginData());
 		return "login";
 	}
 
 	// This method process an POST html request once fulfilled the login.html form
 	// (clicking in the "Enter" button).
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
-	public String showInfo(Model model, @ModelAttribute UserLoginData data, HttpSession session) {
-		User user = part.getParticipant(data.getLogin(), data.getPassword());
+	public String showInfo(Model model, @ModelAttribute AgentLoginData data, HttpSession session) {
+		Agent user = part.getParticipant(data.getLogin(), data.getPassword());
 		if (user == null) {
 			throw new UserNotFoundException();
 		} else {
-			UserInfoAdapter adapter = new UserInfoAdapter(user);
-			UserInfo info = adapter.userToInfo();
+			AgentInfoAdapter adapter = new AgentInfoAdapter(user);
+			AgentInfo info = adapter.userToInfo();
 			model.addAttribute("name", info.getName());
 			model.addAttribute("location", info.getLocation());
 			model.addAttribute("email", info.getEmail());
@@ -81,7 +81,7 @@ public class ParticipantsController {
 	@RequestMapping(value = "/userChangePassword", method = RequestMethod.POST)
 	public String changePassword(Model model, @RequestParam String password, @RequestParam String newPassword,
 			@RequestParam String newPasswordConfirm, HttpSession session) {
-		User loggedUser = (User) session.getAttribute("user");
+		Agent loggedUser = (Agent) session.getAttribute("user");
 		if (new StrongPasswordEncryptor().checkPassword(password, loggedUser.getPassword()) && newPassword.equals(newPasswordConfirm)) {
 			part.updateInfo(loggedUser, newPassword);
 			return "data";

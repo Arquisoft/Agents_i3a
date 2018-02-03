@@ -14,16 +14,16 @@ package domain;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "data")
-public class UserLoginData {
+public class AgentLoginData {
 
 	private String login;
 	private String password;
 
-	public UserLoginData() {
+	public AgentLoginData() {
 
 	}
 
-	public UserLoginData(String login, String password) {
+	public AgentLoginData(String login, String password) {
 		this.login = login;
 		this.password = password;
 	}

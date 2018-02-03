@@ -20,19 +20,19 @@ import java.util.Date;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.User;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
+import domain.Agent;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
 
 /**
  * Created by Nicolás on 18/02/2017.
  * 
  * Adapter by Víctor on 02/02/2018
  */
-public class UserAdapterTest {
+public class AgentAdapterTest {
 
-	private User user1;
-	private User user2;
+	private Agent user1;
+	private Agent user2;
 	
 	/**
 	 * A resources/master.csv file is needed with first record -> 1; Person
@@ -43,16 +43,14 @@ public class UserAdapterTest {
 	public void setUp() throws IOException {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 1996);
-		user1 = new User("User1", "10N20E", "User1@hola.com", "user1Password", new Date(cal.getTime().getTime()),
-				"C/ hola", "spanish", "112233", 1);
-		user2 = new User("User2", "20S10W", "User2@hola.com", "user2Password", new Date(), "C/ hola", "spanish",
-				"112233", 1);
+		user1 = new Agent("User1", "10N20E", "User1@hola.com", "user1Password", "112233", 1);
+		user2 = new Agent("User2", "20S10W", "User2@hola.com", "user2Password", "112233", 1);
 	}
 
 	@Test
 	public void testAdapter() {
-		UserInfoAdapter adapter = new UserInfoAdapter(user1);
-		UserInfo info = adapter.userToInfo();
+		AgentInfoAdapter adapter = new AgentInfoAdapter(user1);
+		AgentInfo info = adapter.userToInfo();
 		assertEquals(info.getName(), user1.getName());
 		assertEquals(info.getLocation(), user1.getLocation());
 		assertEquals(info.getEmail(), user1.getEmail());
@@ -62,8 +60,8 @@ public class UserAdapterTest {
 
 	@Test
 	public void testToString() {
-		UserInfoAdapter adapter = new UserInfoAdapter(user2);
-		UserInfo info = adapter.userToInfo();
+		AgentInfoAdapter adapter = new AgentInfoAdapter(user2);
+		AgentInfo info = adapter.userToInfo();
 		String toString = info.toString();
 		String test = "UserInfo{name='User2', location='20S10W', "
 				+ "email='User2@hola.com', id='112233', kind='Person', kindCode=1}";

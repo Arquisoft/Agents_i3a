@@ -14,10 +14,10 @@ package view;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import domain.User;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
-import domain.UserLoginData;
+import domain.Agent;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
+import domain.AgentLoginData;
 import services.ParticipantsService;
 
 /**
@@ -34,9 +34,9 @@ public class UserResponseAction {
 	this.part = part;
     }
 
-    public ResponseEntity<UserInfo> execute(UserLoginData info) {
-	User user = part.getParticipant(info.getLogin(), info.getPassword());
-	UserInfoAdapter data = new UserInfoAdapter(user);
+    public ResponseEntity<AgentInfo> execute(AgentLoginData info) {
+	Agent user = part.getParticipant(info.getLogin(), info.getPassword());
+	AgentInfoAdapter data = new AgentInfoAdapter(user);
 	if (user == null) {
 	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	} else
