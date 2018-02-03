@@ -10,7 +10,7 @@ import org.apache.commons.csv.CSVRecord;
 public class CSVReader {
 
     
-    private static final String MASTER_FILE_PATH = "resources/master.csv";
+    private static final String MASTER_FILE_PATH = "src/main/resources/master.csv";
 
     public static String getValueForKind(int kindCode) throws IOException
     {
