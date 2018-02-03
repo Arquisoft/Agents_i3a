@@ -1,9 +1,10 @@
 package dbmanagement;
 
-import domain.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import domain.User;
 
 /**
  * Created by Damian on 06/02/2017. Repository interface from the

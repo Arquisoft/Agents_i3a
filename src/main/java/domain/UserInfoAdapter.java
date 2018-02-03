@@ -17,6 +17,6 @@ public class UserInfoAdapter {
 	}
 
 	public UserInfo userToInfo() {
-		return new UserInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind().toString() , user.getKind().getValue());
+		return new UserInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(), user.getKind() , user.getKindCode());
 	}
 }
