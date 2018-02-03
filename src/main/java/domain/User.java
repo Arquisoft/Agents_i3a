@@ -7,7 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import util.CSVReader;
+import Foundation.CSVFile;
+import Foundation.URL;
 import util.JasyptEncryptor;
 
 /**
@@ -29,8 +30,6 @@ public class User {
     private String userId;
     private String location;
     private int kindCode;
-    private String kind;
-    
 
     User() {
 
@@ -42,25 +41,25 @@ public class User {
 	this.password = encryptPass(password);
     }
 
-    public User(String name, String location, String email, String password,
-	    Date dateOfBirth, String address, String nationality, String userId,
-	    int kindCode) throws IOException {
+    public User(String name, String location, String email, String password, Date dateOfBirth, String address,
+	    String nationality, String userId, int kindCode) throws IOException {
 	this(name, email, password);
 	this.dateOfBirth = dateOfBirth;
 	this.address = address;
 	this.nationality = nationality;
 	this.location = location;
 	this.userId = userId;
+	this.kindCode = kindCode;
 	setKindCode(kindCode);
     }
 
     @Override
     public String toString() {
-	return "User{" + "name='" + name + '\'' + ", lastName='" + location
-		+ '\'' + ", email='" + email + '\'' + ", password='" + password
-		+ '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='"
-		+ address + '\'' + ", nationality='" + nationality + '\''
-		+ ", id='" + userId + '\'' + ", kind='" + kind + '\'' + ", kindcode=" + kindCode +'}';
+	return "User{" + "name='" + name + '\'' + ", lastName='" + location + '\'' + ", email='" + email + '\''
+		+ ", password='" + password + '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='" + address
+		+ '\'' + ", nationality='" + nationality + '\'' + ", id='" + userId + '\'' + ", kind='"
+		+ getKind()
+		+ '\'' + ", kindcode=" + kindCode + '}';
     }
 
     @Override
@@ -141,25 +140,20 @@ public class User {
 	this.location = location;
     }
 
-    public String getKind(){
-        return kind;
+    public String getKind() {
+	return CSVFile.of(new URL("resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
     }
 
-    public int getKindCode(){
+    public int getKindCode() {
 	return kindCode;
     }
 
-    public void setKindCode(int kindCode) throws IOException {
-        this.kindCode = kindCode;
-        kind = CSVReader.getValueForKind( kindCode );
+    public void setKindCode(int kindCode) {
+	this.kindCode = kindCode;
     }
-
 
     private String encryptPass(String password) {
-	JasyptEncryptor encryptor = new JasyptEncryptor();
-	return encryptor.encryptPassword(password);
+	return new JasyptEncryptor().encryptPassword(password);
     }
-
-
 
 }
