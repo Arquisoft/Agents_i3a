@@ -112,11 +112,11 @@ public class AgentTest {
     @Test
     public void nifTest() {
 
-	assertEquals(null, nico.getUserId());
+	assertEquals(null, nico.getId());
 
-	assertEquals("111111111A", jorge.getUserId());
+	assertEquals("111111111A", jorge.getId());
 
-	assertEquals("222222222B", damian.getUserId());
+	assertEquals("222222222B", damian.getId());
     }
 
     @Test
@@ -162,7 +162,7 @@ public class AgentTest {
     public void toStringTest() {
 	nico.setKindCode(1);
 	assertEquals("{" + "name='" + nico.getName() + "'," + "location='" + nico.getLocation() + "'," + "email='"
-		+ nico.getEmail() + "'," + "id='" + nico.getUserId() + "'," + "kind='" + nico.getKind() + "',"
+		+ nico.getEmail() + "'," + "id='" + nico.getId() + "'," + "kind='" + nico.getKind() + "',"
 		+ "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
     }
 

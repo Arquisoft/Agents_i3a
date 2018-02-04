@@ -29,13 +29,9 @@ import Foundation.URL;
 public class Agent {
 
     @Id
-    private ObjectId id;
+    private ObjectId _id;
 
-    private String name;
-    private String email;
-    private String password;
-    private String userId;
-    private String location;
+    private String name, email, password, id, location;
     private int kindCode;
 
     Agent() {
@@ -51,15 +47,21 @@ public class Agent {
     public Agent(String name, String location, String email, String password, String userId, int kindCode) {
 	this(name, email, password);
 	this.location = location;
-	this.userId = userId;
+	this.id = userId;
 	this.kindCode = kindCode;
-	setKindCode(kindCode);
     }
 
     @Override
     public String toString() {
-	return "{" + "name='" + name + '\'' + ",location='" + location + '\'' + ",email='" + email + '\'' + ",id='"
-		+ userId + '\'' + ",kind='" + getKind() + '\'' + ",kindCode='" + kindCode + '\'' + '}';
+	final StringBuilder sb = new StringBuilder("{");
+	sb.append("name='").append(name).append('\'');
+	sb.append(",location='").append(location).append('\'');
+	sb.append(",email='").append(email).append('\'');
+	sb.append(",id='").append(_id).append('\'');
+	sb.append(",kind='").append(getKind()).append('\'');
+	sb.append(",kindCode='").append(kindCode).append("'");
+	sb.append('}');
+	return sb.toString();
     }
 
     @Override
@@ -71,13 +73,13 @@ public class Agent {
 
 	Agent user = (Agent) o;
 
-	return userId.equals(user.userId);
+	return id.equals(user.id);
 
     }
 
     @Override
     public int hashCode() {
-	return userId.hashCode();
+	return id.hashCode();
     }
 
     /**
@@ -104,8 +106,8 @@ public class Agent {
     /**
      * @return get the user id.
      */
-    public String getUserId() {
-	return userId;
+    public String getId() {
+	return id;
     }
 
     public void setName(String name) {

@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Agent;
-import domain.AgentInfo;
-import domain.AgentInfoAdapter;
 import domain.AgentLoginData;
 import services.ParticipantsService;
 
@@ -38,10 +36,10 @@ import services.ParticipantsService;
 @Controller
 public class ParticipantsController {
 
-    private final ParticipantsService part;
+    private final ParticipantsService participantsService;
 
     ParticipantsController(ParticipantsService part) {
-	this.part = part;
+	this.participantsService = part;
     }
 
     // The first page shown will be login.html.
@@ -55,18 +53,16 @@ public class ParticipantsController {
     // (clicking in the "Enter" button).
     @RequestMapping(value = "/userForm", method = RequestMethod.POST)
     public String showInfo(Model model, @ModelAttribute AgentLoginData data, HttpSession session) {
-	Agent user = part.getParticipant(data.getLogin(), data.getPassword(), data.getKind());
+	Agent user = participantsService.getParticipant(data.getLogin(), data.getPassword(), data.getKind());
 	if (user == null) {
 	    throw new UserNotFoundException();
 	} else {
-	    AgentInfoAdapter adapter = new AgentInfoAdapter(user);
-	    AgentInfo info = adapter.userToInfo();
-	    model.addAttribute("name", info.getName());
-	    model.addAttribute("location", info.getLocation());
-	    model.addAttribute("email", info.getEmail());
-	    model.addAttribute("kind", info.getKind());
-	    model.addAttribute("id", info.getId());
-	    model.addAttribute("kindCode", info.getKindCode());
+	    model.addAttribute("name", user.getName());
+	    model.addAttribute("location", user.getLocation());
+	    model.addAttribute("email", user.getEmail());
+	    model.addAttribute("kind", user.getKind());
+	    model.addAttribute("id", user.getId());
+	    model.addAttribute("kindCode", user.getKindCode());
 	    model.addAttribute("user", user);
 	    session.setAttribute("user", user);
 	    return "data";
@@ -82,10 +78,13 @@ public class ParticipantsController {
     @RequestMapping(value = "/userChangePassword", method = RequestMethod.POST)
     public String changePassword(Model model, @RequestParam String password, @RequestParam String newPassword,
 	    @RequestParam String newPasswordConfirm, HttpSession session) {
+	
 	Agent loggedUser = (Agent) session.getAttribute("user");
+	
 	if (new StrongPasswordEncryptor().checkPassword(password, loggedUser.getPassword())
 		&& newPassword.equals(newPasswordConfirm)) {
-	    part.updateInfo(loggedUser, newPassword);
+	    
+	    participantsService.updateInfo(loggedUser, newPassword);
 	    return "data";
 	}
 	return "changePassword";

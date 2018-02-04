@@ -87,7 +87,7 @@ public class ParticipantsDataControllerTest {
 		// The state of the response must be OK. (200);
 		.andExpect(status().isOk())
 		// We can do jsonpaths in order to check 1996
-		.andExpect(jsonPath("$.name", is(maria.getName()))).andExpect(jsonPath("$.id", is(maria.getUserId())))
+		.andExpect(jsonPath("$.name", is(maria.getName()))).andExpect(jsonPath("$.id", is(maria.getId())))
 		.andExpect(jsonPath("$.location", is(maria.getLocation())))
 		.andExpect(jsonPath("$.email", is(maria.getEmail()))).andExpect(jsonPath("$.kind", is(maria.getKind())))
 		.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
@@ -106,7 +106,7 @@ public class ParticipantsDataControllerTest {
 		// The state of the response must be OK. (200);
 		.andExpect(status().isOk())
 		// We can do jsonpaths in order to check
-		.andExpect(jsonPath("$.name", is(maria.getName()))).andExpect(jsonPath("$.id", is(maria.getUserId())))
+		.andExpect(jsonPath("$.name", is(maria.getName()))).andExpect(jsonPath("$.id", is(maria.getId())))
 		.andExpect(jsonPath("$.location", is(maria.getLocation())))
 		.andExpect(jsonPath("$.email", is(maria.getEmail()))).andExpect(jsonPath("$.kind", is(maria.getKind())))
 		.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
@@ -165,9 +165,9 @@ public class ParticipantsDataControllerTest {
 	mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
 		.andExpect(jsonPath("$.name", is(maria.getName())))
 		.andExpect(jsonPath("$.location", is(maria.getLocation())))
-		.andExpect(jsonPath("$.id", is(maria.getUserId())))
-		.andExpect(jsonPath("$.location", is(maria.getLocation())))
-		.andExpect(jsonPath("$.email", is(maria.getEmail()))).andExpect(jsonPath("$.kind", is(maria.getKind())))
+		.andExpect(jsonPath("$.email", is(maria.getEmail())))
+		.andExpect(jsonPath("$.id", is(maria.getId())))
+		.andExpect(jsonPath("$.kind", is(maria.getKind())))
 		.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
 
     }

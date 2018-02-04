@@ -15,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import domain.Agent;
-import domain.AgentInfo;
-import domain.AgentInfoAdapter;
 import domain.AgentLoginData;
 import services.ParticipantsService;
 
@@ -34,12 +32,16 @@ public class UserResponseAction {
 	this.part = part;
     }
 
-    public ResponseEntity<AgentInfo> execute(AgentLoginData info) {
+    public ResponseEntity<Agent> execute(AgentLoginData info) {
+	
 	Agent user = part.getParticipant(info.getLogin(), info.getPassword(), info.getKind());
-	AgentInfoAdapter data = new AgentInfoAdapter(user);
+	
+	//AgentInfoAdapter data = new AgentInfoAdapter(user);
 	if (user == null) {
 	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	} else
-	    return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
+	} else {
+	    //return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
+	    return new ResponseEntity<>(user, HttpStatus.OK);
+	}
     }
 }
