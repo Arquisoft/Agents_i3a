@@ -11,9 +11,6 @@
  */
 package domain;
 
-import java.io.IOException;
-import java.util.Date;
-
 import org.bson.types.ObjectId;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
@@ -29,50 +26,42 @@ import Foundation.URL;
  * @since 06/02/2017
  */
 @Document(collection = "users")
-public class User {
+public class Agent {
 
     @Id
-    private ObjectId id;
+    private ObjectId _id;
 
-    private String name;
-    private String email;
-    private String password;
-    private Date dateOfBirth;
-    private String address;
-    private String nationality;
-    private String userId;
-    private String location;
+    private String name, email, password, id, location;
     private int kindCode;
 
-    User() {
+    Agent() {
 
     }
 
-    public User(String name, String email, String password) {
+    public Agent(String name, String email, String password) {
 	this.name = name;
 	this.email = email;
 	setPassword(password);
     }
 
-    public User(String name, String location, String email, String password, Date dateOfBirth, String address,
-	    String nationality, String userId, int kindCode) throws IOException {
+    public Agent(String name, String location, String email, String password, String userId, int kindCode) {
 	this(name, email, password);
-	this.dateOfBirth = dateOfBirth;
-	this.address = address;
-	this.nationality = nationality;
 	this.location = location;
-	this.userId = userId;
+	this.id = userId;
 	this.kindCode = kindCode;
-	setKindCode(kindCode);
     }
 
     @Override
     public String toString() {
-	return "User{" + "name='" + name + '\'' + ", lastName='" + location + '\'' + ", email='" + email + '\''
-		+ ", password='" + password + '\'' + ", dateOfBirth='" + dateOfBirth + '\'' + ", address='" + address
-		+ '\'' + ", nationality='" + nationality + '\'' + ", id='" + userId + '\'' + ", kind='"
-		+ getKind()
-		+ '\'' + ", kindcode=" + kindCode + '}';
+	final StringBuilder sb = new StringBuilder("{");
+	sb.append("name='").append(name).append('\'');
+	sb.append(",location='").append(location).append('\'');
+	sb.append(",email='").append(email).append('\'');
+	sb.append(",id='").append(_id).append('\'');
+	sb.append(",kind='").append(getKind()).append('\'');
+	sb.append(",kindCode='").append(kindCode).append("'");
+	sb.append('}');
+	return sb.toString();
     }
 
     @Override
@@ -82,15 +71,15 @@ public class User {
 	if (o == null || getClass() != o.getClass())
 	    return false;
 
-	User user = (User) o;
+	Agent user = (Agent) o;
 
-	return userId.equals(user.userId);
+	return id.equals(user.id);
 
     }
 
     @Override
     public int hashCode() {
-	return userId.hashCode();
+	return id.hashCode();
     }
 
     /**
@@ -115,25 +104,10 @@ public class User {
     }
 
     /**
-     * @return the date of bir... to remove....
-     */
-    public Date getDateOfBirth() {
-	return new Date(dateOfBirth.getTime());
-    }
-
-    public String getAddress() {
-	return address;
-    }
-
-    public String getNationality() {
-	return nationality;
-    }
-
-    /**
      * @return get the user id.
      */
-    public String getUserId() {
-	return userId;
+    public String getId() {
+	return id;
     }
 
     public void setName(String name) {
@@ -145,19 +119,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-	this.password =  new StrongPasswordEncryptor().encryptPassword(password);
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-	this.dateOfBirth = dateOfBirth;
-    }
-
-    public void setAddress(String address) {
-	this.address = address;
-    }
-
-    public void setNationality(String nationality) {
-	this.nationality = nationality;
+	this.password = new StrongPasswordEncryptor().encryptPassword(password);
     }
 
     public String getLocation() {
@@ -169,12 +131,15 @@ public class User {
     }
 
     /**
-     * Gets the kind of user as a plain text. that will depend from a master csv file.
+     * Gets the kind of user as a plain text. that will depend from a master csv
+     * file.
      * 
-     * @return the kind of user as a plain text. that will depend from a master csv file.
+     * @return the kind of user as a plain text. that will depend from a master csv
+     *         file.
      */
     public String getKind() {
-	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent().get(Integer.toString(kindCode))[0];
+	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent()
+		.get(Integer.toString(kindCode))[0];
     }
 
     /**
@@ -189,7 +154,8 @@ public class User {
     /**
      * Sets the kind of user from a code.
      * 
-     * @param kindCode to set to the user.
+     * @param kindCode
+     *            to set to the user.
      */
     public void setKindCode(int kindCode) {
 	this.kindCode = kindCode;

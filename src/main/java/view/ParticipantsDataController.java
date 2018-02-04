@@ -20,26 +20,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.UserInfo;
-import domain.UserLoginData;
+import domain.Agent;
+import domain.AgentLoginData;
 import services.ParticipantsService;
 
 @RestController
 public class ParticipantsDataController {
 
-	private final ParticipantsService part;
+    private final ParticipantsService part;
 
-	@Autowired
-	ParticipantsDataController(ParticipantsService part) {
-		this.part = part;
-	}
+    @Autowired
+    ParticipantsDataController(ParticipantsService part) {
+	this.part = part;
+    }
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ResponseEntity<UserInfo> userOkJSON(@RequestBody UserLoginData info) {
-		UserResponseAction act = new UserResponseAction(part);
-		return act.execute(info);
-	}
+    @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
+	    MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Agent> userOkJSON(@RequestBody AgentLoginData info) {
+	return new UserResponseAction(part).execute(info);
+    }
 
 }
