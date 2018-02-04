@@ -27,8 +27,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import dbmanagement.Database;
 import dbmanagement.UsersRepository;
 import domain.Agent;
-import domain.AgentInfo;
-import domain.AgentInfoAdapter;
 import main.Application;
 
 /**
@@ -109,21 +107,17 @@ public class DatabaseTest {
 
 	Assert.assertEquals("Maria", user.getName());
 	Assert.assertEquals("10N30E", user.getLocation());
-	Assert.assertEquals("158", user.getUserId());
+	Assert.assertEquals("158", user.getId());
 	Assert.assertEquals("asd", user.getEmail());
 	Assert.assertEquals("Person", user.getKind());
 	Assert.assertEquals(1, user.getKindCode());
 
-	AgentInfoAdapter userAdapter = new AgentInfoAdapter(user);
-
-	AgentInfo userInfo = userAdapter.userToInfo();
-
-	Assert.assertEquals(user.getName(), userInfo.getName());
-	Assert.assertEquals(user.getLocation(), userInfo.getLocation());
-	Assert.assertEquals(user.getEmail(), userInfo.getEmail());
-	Assert.assertEquals(user.getUserId(), userInfo.getId());
-	Assert.assertEquals("Person", userInfo.getKind());
-	Assert.assertEquals(1, userInfo.getKindCode());
+	Assert.assertEquals(user.getName(), user.getName());
+	Assert.assertEquals(user.getLocation(), user.getLocation());
+	Assert.assertEquals(user.getEmail(), user.getEmail());
+	Assert.assertEquals(user.getId(), user.getId());
+	Assert.assertEquals("Person", user.getKind());
+	Assert.assertEquals(1, user.getKindCode());
 
 	user.setName("Pepa");
 	user.setLocation("45N35.5W");
@@ -133,7 +127,7 @@ public class DatabaseTest {
 	Agent updatedUser = dat.getParticipant("asd");
 	Assert.assertEquals("Pepa", updatedUser.getName());
 	Assert.assertEquals("45N35.5W", updatedUser.getLocation());
-	Assert.assertEquals("158", updatedUser.getUserId());
+	Assert.assertEquals("158", updatedUser.getId());
 	Assert.assertEquals("asd", updatedUser.getEmail());
 	Assert.assertEquals("Entity", updatedUser.getKind());
 	Assert.assertEquals(2, updatedUser.getKindCode());

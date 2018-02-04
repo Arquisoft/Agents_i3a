@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.AgentInfo;
+import domain.Agent;
 import domain.AgentLoginData;
 import services.ParticipantsService;
 
@@ -37,9 +37,8 @@ public class ParticipantsDataController {
     @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE,
 	    MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<AgentInfo> userOkJSON(@RequestBody AgentLoginData info) {
-	UserResponseAction act = new UserResponseAction(part);
-	return act.execute(info);
+    public ResponseEntity<Agent> userOkJSON(@RequestBody AgentLoginData info) {
+	return new UserResponseAction(part).execute(info);
     }
 
 }
