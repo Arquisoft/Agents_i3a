@@ -7,7 +7,7 @@
 This repository contains the agents module of the team I3A2. Developed during the 2018 Software Architecture course.
 
 ## 2017 / 2018 Authors
-- [Guillermo Facundo Colunga](https://github.com/ZenMaster91)
+- [Guillermo Facundo Colunga](https://github.com/thewilly)
 - [Carlos García Hernández](https://github.com/CarlosGarciaHdez)
 - [Victor Suárez Fernández](https://github.com/ByBordex)
 
@@ -63,6 +63,7 @@ user interface manually you'll have to introduce this document:
 And as data use:
  - login: prueba01@prueba.es
  - password: 4[[j[frVCUMJ>hU
+ - Kind of agent: Person
 
  If you have the data and the database running and the application still reports a 404 Not Found when it shouldn't
  try deleting the document and adding it again.
