@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package domain_tests;
+package domainTests;
 
 import static org.junit.Assert.*;
 
@@ -140,7 +140,10 @@ public class AgentTest {
 	CSVFile previous = CSVFile.of(new URL("src/main/resources/master.csv"), ",");
 	CSVFile testFile = new CSVFile(new URL("src/main/resources/master.csv"));
 	testFile.setSeparator(",");
-	String[] person = { "Person" }, entity = { "Entity" }, sensor = { "Sensor" }, iphone = { "iPhone" };
+	String[] person = { "Person" },
+		entity = { "Entity" },
+		sensor = { "Sensor" },
+		iphone = { "iPhone" };
 	testFile.getContent().put("1", person);
 	testFile.getContent().put("2", entity);
 	testFile.getContent().put("3", sensor);

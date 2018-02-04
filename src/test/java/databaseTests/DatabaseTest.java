@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package database_tests;
+package databaseTests;
 
 import java.io.IOException;
 import java.util.Calendar;
