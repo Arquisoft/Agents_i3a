@@ -18,6 +18,7 @@ import java.io.IOException;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyEmitter.DataWithMediaType;
 
 import Foundation.CSVFile;
 import Foundation.URL;
@@ -239,6 +240,7 @@ public class AgentTest {
 		+ "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void equalsTest() {
 	
@@ -259,6 +261,24 @@ public class AgentTest {
 	
 	// Checking now the copies are not equal.
 	assertNotEquals(true, copyOfNico.equals(nonEqualCopyOfNico));
+	
+	// Cheking with itself
+	assertEquals(true, copyOfNico.equals(copyOfNico));
+	
+	// Check for null values.
+	assertEquals(false, copyOfNico.equals(null));
+	
+	// Check for different classes.
+	assertEquals(false, copyOfNico.equals("I'm a fake agent..."));
+    }
+    
+    @Test
+    public void hashCodeTest() {
+	// Nico has null ad id so a perfect test, must be 0.
+	assertEquals(nico.getId().hashCode(), nico.hashCode());
+	
+	// Testing someone with an id.
+	assertEquals(jorge.getId().hashCode(), jorge.hashCode());
     }
 
     @Test

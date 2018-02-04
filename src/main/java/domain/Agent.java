@@ -88,7 +88,7 @@ public class Agent implements Comparable<Agent> {
 
     @Override
     public int hashCode() {
-	return id.hashCode();
+	return getId().hashCode();
     }
 
     /**
