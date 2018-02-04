@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package view_tests;
+package viewTests;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
