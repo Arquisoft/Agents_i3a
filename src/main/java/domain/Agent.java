@@ -26,13 +26,15 @@ import Foundation.URL;
  * @since 06/02/2017
  */
 @Document(collection = "users")
-public class Agent {
+public class Agent implements Comparable<Agent> {
 
     @Id
     private ObjectId _id;
 
     private String name, email, password, id, location;
     private int kindCode;
+    
+    public final static String KIND_NOT_FOUND = "KIND NOT FOUND";
 
     Agent() {
 
@@ -57,7 +59,7 @@ public class Agent {
 	sb.append("name='").append(name).append('\'');
 	sb.append(",location='").append(location).append('\'');
 	sb.append(",email='").append(email).append('\'');
-	sb.append(",id='").append(_id).append('\'');
+	sb.append(",id='").append(id).append('\'');
 	sb.append(",kind='").append(getKind()).append('\'');
 	sb.append(",kindCode='").append(kindCode).append("'");
 	sb.append('}');
@@ -66,15 +68,22 @@ public class Agent {
 
     @Override
     public boolean equals(Object o) {
+	// Self check.
 	if (this == o)
 	    return true;
+
+	// Null or different instance check.
 	if (o == null || getClass() != o.getClass())
 	    return false;
 
+	// Casting the object to agent.
 	Agent user = (Agent) o;
-
 	return id.equals(user.id);
+    }
 
+    @Override
+    public int compareTo(Agent anotherAgent) {
+	return this.id.compareTo(anotherAgent.getId());
     }
 
     @Override
@@ -86,14 +95,14 @@ public class Agent {
      * @return the name of the user.
      */
     public String getName() {
-	return name;
+	return (name == null) ? name = "" : name;
     }
 
     /**
      * @return the email of the user.
      */
     public String getEmail() {
-	return email;
+	return (email == null) ? email = "" : email;
     }
 
     /**
@@ -107,7 +116,7 @@ public class Agent {
      * @return get the user id.
      */
     public String getId() {
-	return id;
+	return (id == null) ? id = "" : id;
     }
 
     public void setName(String name) {
@@ -119,11 +128,12 @@ public class Agent {
     }
 
     public void setPassword(String password) {
-	this.password = new StrongPasswordEncryptor().encryptPassword(password);
+	this.password = (password == null) ? new StrongPasswordEncryptor().encryptPassword(password = "")
+		: new StrongPasswordEncryptor().encryptPassword(password);
     }
 
     public String getLocation() {
-	return location;
+	return (location == null) ? location = "" : location;
     }
 
     public void setLocation(String location) {
@@ -138,8 +148,12 @@ public class Agent {
      *         file.
      */
     public String getKind() {
-	return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent()
-		.get(Integer.toString(kindCode))[0];
+	try {
+	    return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent()
+		    .get(Integer.toString(kindCode))[0];
+	} catch (NullPointerException e) {
+	    return "KIND NOT FOUND";
+	}
     }
 
     /**
