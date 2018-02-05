@@ -21,7 +21,7 @@ This repository contains the agents module of the team I3A2. Developed during th
 - Damián Rubio Cuervo (@DamianRubio)
 - Antonio Nicolás Rivero Gómez (@Lan5432)
 
-### 2018 - Mantainers
+### 2018 - Maintainers
 - [Guillermo Facundo Colunga](https://github.com/thewilly)
 - [Carlos García Hernández](https://github.com/CarlosGarciaHdez)
 - [Victor Suárez Fernández](https://github.com/ByBordex)
