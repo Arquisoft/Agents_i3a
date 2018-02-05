@@ -27,7 +27,7 @@
   <div class="container">
     <form action="#" th:action="@{/userForm}" th:object="${userinfo}" id="Datos" class="form-signin" method="post">
       <h2>Login</h2>
-      <input id="login" name="login" type="text" th:field="*{login}" class="form-control" placeholder="Email" />
+      <input id="login" name="login" type="text" th:field="*{login}" class="form-control" placeholder="Identifier" />
       <input id="password" name="password" type="password" th:field="*{password}" class="form-control" placeholder="Password" />
       <!--<input id="kind" name="kind" type="text" th:field="*{kind}" class="form-control" placeholder="KindOfAgend" /> -->
       <select id="kind" name="kind" th:field="*{kind}" class="form-control">

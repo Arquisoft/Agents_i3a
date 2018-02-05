@@ -34,10 +34,10 @@ public interface Database {
     /**
      * Gets a participant from its email address.
      * 
-     * @param email
+     * @param id
      *            of the participant to get.
      * @return the participant if exists, null otherwise.
      */
-    Agent getParticipant(String email);
+    Agent getParticipant(String id);
 
 }

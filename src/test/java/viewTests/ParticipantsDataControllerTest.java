@@ -77,7 +77,7 @@ public class ParticipantsDataControllerTest {
 
     @Test
     public void userInsertInformation() throws Exception {
-	String payload = String.format(QUERY_STRING, maria.getEmail(), plainPassword, maria.getKindCode());
+	String payload = String.format(QUERY_STRING, maria.getId(), plainPassword, maria.getKindCode());
 	// We send a POST request to that URI (from http:localhost...)
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
 		.content(payload.getBytes());
@@ -96,7 +96,7 @@ public class ParticipantsDataControllerTest {
     @Test
     public void userInsertInformationXML() throws Exception {
 	String payload = String.format("<data><login>%s</login><password>%s</password><kind>%s</kind></data>",
-		maria.getEmail(), plainPassword, maria.getKindCode());
+		maria.getId(), plainPassword, maria.getKindCode());
 	// POST request with XML content
 	MockHttpServletRequestBuilder request = post("/user").session(session)
 		.contentType(MediaType.APPLICATION_XML_VALUE).content(payload.getBytes());
@@ -114,7 +114,7 @@ public class ParticipantsDataControllerTest {
 
     @Test
     public void userInterfaceInsertInfoCorect() throws Exception {
-	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getEmail())
+	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getId())
 		.param("password", plainPassword).param("kind", Integer.toString(maria.getKindCode()));
 	mockMvc.perform(request).andExpect(status().isOk());
     }
@@ -138,7 +138,7 @@ public class ParticipantsDataControllerTest {
      */
     @Test
     public void testForIncorrectPassword() throws Exception {
-	String payload = String.format(QUERY_STRING, maria.getEmail(), "Not maria's password", 1);
+	String payload = String.format(QUERY_STRING, maria.getId(), "Not maria's password", 1);
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
 		.content(payload.getBytes());
 	mockMvc.perform(request).andDo(print()).andExpect(status().isNotFound());
@@ -149,7 +149,7 @@ public class ParticipantsDataControllerTest {
 	MockHttpSession session = new MockHttpSession();
 
 	// We check we have the proper credentials
-	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getEmail())
+	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getId())
 		.param("password", plainPassword).param("kind", Integer.toString(maria.getKindCode()));
 	mockMvc.perform(request).andExpect(status().isOk());
 
@@ -158,7 +158,7 @@ public class ParticipantsDataControllerTest {
 		.param("newPassword", "HOLA").param("newPasswordConfirm", "HOLA");
 	mockMvc.perform(request).andExpect(status().isOk());
 
-	String payload = String.format(QUERY_STRING, maria.getEmail(), "HOLA", maria.getKindCode());
+	String payload = String.format(QUERY_STRING, maria.getId(), "HOLA", maria.getKindCode());
 
 	// We check password has changed
 	request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());

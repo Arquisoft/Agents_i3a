@@ -29,7 +29,7 @@ public class MongoDatabase implements Database {
 
     @Override
     public Agent getParticipant(String email) {
-	return users.findByEmail(email);
+	return users.findById(email);
     }
 
 }
