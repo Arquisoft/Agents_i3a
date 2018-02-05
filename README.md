@@ -38,7 +38,7 @@ As the project is developed in java macOS, Windows and Linux distros are nativel
 #### Java Development Kit (JDK)
 A Java Development Kit (JDK) is a program development environment for writing Java applets and applications. It consists of a runtime environment that "sits on top" of the operating system layer as well as the tools and programming that developers need to compile, debug, and run applets and applications written in the Java language.
 
-If you do not has the lastest stable version download you can download it [here](www.oracle.com/technetwork/java/javase/downloads).
+If you do not has the lastest stable version download you can download it [here](http://www.oracle.com/technetwork/java/javase/downloads).
 
 #### MongoDB
 This project uses MongoDB as the database. You can check how to use it on [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB). By defatult a dummy server is up and running, its configured at the file `applications.properties`. Change this configuration as needed, should not interfeer with the module itself.
@@ -74,8 +74,8 @@ user interface manually you'll have to introduce this document:
     "_id" : "58a8670df086e81dc034d7fc",
     "name" : "Clara Oswin Oswald",
     "location" : "10N10W",
-    "email" : "olwad@tardis.universe",
-    "kind" : "1",
+    "email" : "oswald@tardis.universe",
+    "kindCode" : "1",
     "id" : "00000000A",
     "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
 }
