@@ -44,7 +44,7 @@ If you do not has the lastest stable version download you can download it [here]
 This project uses MongoDB as the database. You can check how to use it on [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB). By defatult a dummy server is up and running, its configured at the file `applications.properties`. Change this configuration as needed, should not interfeer with the module itself.
 
 #### Jasypt
-This project uses Jasypt to encrypt the passwords. You don't need to download it as far as its dependency its imported from maven central, but you can check it at: http://www.jasypt.org/
+This project uses Jasypt to encrypt the passwords. You don't need to download it as far as its dependency its imported from maven central, but you can check it [here](http://www.jasypt.org/).
 
 ### Getting Sources for Agents_i3a
 First create a directory for all of the project sources:
