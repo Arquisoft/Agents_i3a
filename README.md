@@ -92,7 +92,7 @@ And as data use:
 ### Working with Agents_i3a
 
 #### REST requests
-In order to use the user credentials to obtain your data, you can send a POST request to http://localhost:8080/user. The
+In order to use the user credentials to obtain your data, you can send a POST request to [localhost:8080/user](http://localhost:8080/user). The
 data in this request can come as:
 ##### JSON
 ```json
