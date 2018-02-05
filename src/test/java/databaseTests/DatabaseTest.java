@@ -83,10 +83,10 @@ public class DatabaseTest {
     @Test
     public void testUpdateInfoWithPassword() {
 	// It should be previously encoded if the DB is given so this may be changed.
-	Agent user = dat.getParticipant("LGracia@gmail.com");
+	Agent user = dat.getParticipant(testedUser.getId());
 	user.setPassword("confidencial");
 	dat.updateInfo(user);
-	Agent userAfter = dat.getParticipant("LGracia@gmail.com");
+	Agent userAfter = dat.getParticipant(testedUser.getId());
 	Assert.assertTrue(new StrongPasswordEncryptor().checkPassword("confidencial", userAfter.getPassword())); // They
 														 // should
 														 // be
@@ -103,7 +103,7 @@ public class DatabaseTest {
 
     @Test
     public void testUpdateInfoAndAdaptation() throws IOException {
-	Agent user = dat.getParticipant("asd");
+	Agent user = dat.getParticipant(testedUser2.getId());
 
 	Assert.assertEquals("Maria", user.getName());
 	Assert.assertEquals("10N30E", user.getLocation());
@@ -124,7 +124,7 @@ public class DatabaseTest {
 	user.setKindCode(2);
 
 	dat.updateInfo(user);
-	Agent updatedUser = dat.getParticipant("asd");
+	Agent updatedUser = dat.getParticipant(testedUser2.getId());
 	Assert.assertEquals("Pepa", updatedUser.getName());
 	Assert.assertEquals("45N35.5W", updatedUser.getLocation());
 	Assert.assertEquals("158", updatedUser.getId());
