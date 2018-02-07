@@ -143,33 +143,4 @@ public class ParticipantsDataControllerTest {
 		.content(payload.getBytes());
 	mockMvc.perform(request).andDo(print()).andExpect(status().isNotFound());
     }
-
-    @Test
-    public void testChangePassword() throws Exception {
-	MockHttpSession session = new MockHttpSession();
-
-	// We check we have the proper credentials
-	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getId())
-		.param("password", plainPassword).param("kind", Integer.toString(maria.getKindCode()));
-	mockMvc.perform(request).andExpect(status().isOk());
-
-	// We change it
-	request = post("/userChangePassword").session(session).param("password", plainPassword)
-		.param("newPassword", "HOLA").param("newPasswordConfirm", "HOLA");
-	mockMvc.perform(request).andExpect(status().isOk());
-
-	String payload = String.format(QUERY_STRING, maria.getId(), "HOLA", maria.getKindCode());
-
-	// We check password has changed
-	request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
-	mockMvc.perform(request).andDo(print()).andExpect(status().isOk())
-		.andExpect(jsonPath("$.name", is(maria.getName())))
-		.andExpect(jsonPath("$.location", is(maria.getLocation())))
-		.andExpect(jsonPath("$.email", is(maria.getEmail())))
-		.andExpect(jsonPath("$.id", is(maria.getId())))
-		.andExpect(jsonPath("$.kind", is(maria.getKind())))
-		.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
-
-    }
-
 }

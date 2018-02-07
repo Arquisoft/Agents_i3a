@@ -52,7 +52,7 @@ public class ParticipantsController {
     // This method process an POST html request once fulfilled the login.html form
     // (clicking in the "Enter" button).
     @RequestMapping(value = "/userForm", method = RequestMethod.POST)
-    public String showInfo(Model model, @ModelAttribute AgentLoginData data, HttpSession session) {
+    public String showInfo(Model model, @ModelAttribute AgentLoginData data) {
 	Agent user = participantsService.getParticipant(data.getLogin(), data.getPassword(), data.getKind());
 	if (user == null) {
 	    throw new UserNotFoundException();
@@ -64,30 +64,7 @@ public class ParticipantsController {
 	    model.addAttribute("id", user.getId());
 	    model.addAttribute("kindCode", user.getKindCode());
 	    model.addAttribute("user", user);
-	    session.setAttribute("user", user);
 	    return "data";
 	}
     }
-
-    @RequestMapping(value = "/passMenu", method = RequestMethod.GET)
-    public String showMenu(Model model) {
-	// Just in case there must be more processing.
-	return "changePassword";
-    }
-
-    @RequestMapping(value = "/userChangePassword", method = RequestMethod.POST)
-    public String changePassword(Model model, @RequestParam String password, @RequestParam String newPassword,
-	    @RequestParam String newPasswordConfirm, HttpSession session) {
-	
-	Agent loggedUser = (Agent) session.getAttribute("user");
-	
-	if (new StrongPasswordEncryptor().checkPassword(password, loggedUser.getPassword())
-		&& newPassword.equals(newPasswordConfirm)) {
-	    
-	    participantsService.updateInfo(loggedUser, newPassword);
-	    return "data";
-	}
-	return "changePassword";
-    }
-
 }
