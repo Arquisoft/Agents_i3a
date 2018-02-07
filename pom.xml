@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.uniovi.asw</groupId>
+	<artifactId>agents_i3a</artifactId>
 	<name>agents_i3a</name>
 	<version>0.0.1</version>
 
@@ -12,31 +13,31 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.4.3.RELEASE</version>
 	</parent>
-	
+
 	<dependencies>
 		<dependency>
-	    		<groupId>com.github.computer-engineering-uniovi</groupId>
-	    		<artifactId>swift</artifactId>
-	    		<version>1.1</version>
+			<groupId>com.github.computer-engineering-uniovi</groupId>
+			<artifactId>swift</artifactId>
+			<version>1.1</version>
 		</dependency>
-	
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
-		  <groupId>org.springframework.test.htmlunit</groupId>
-		  <artifactId>spring-test-htmlunit</artifactId>
-		  <version>1.0.0.RC1</version>
-		  <scope>test</scope>
+			<groupId>org.springframework.test.htmlunit</groupId>
+			<artifactId>spring-test-htmlunit</artifactId>
+			<version>1.0.0.RC1</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -59,13 +60,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test</artifactId>
 		</dependency>
-		
+
 		<!-- Jasypt Depencency -->
 		<dependency>
-  			<groupId>org.jasypt</groupId>
-   			<artifactId>jasypt</artifactId>
-   			<version>1.9.2</version>
-  		</dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+			<version>1.9.2</version>
+		</dependency>
 
 		<!-- MongoDB Dependency -->
 		<dependency>
@@ -73,38 +74,38 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.ext</groupId>
-            <artifactId>jersey-spring3</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-beans</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-context</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 		<!-- Apache commons-csv -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-csv</artifactId>
-		    <version>1.5</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.5</version>
 		</dependency>
 
 
@@ -143,7 +144,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 	</build>
 
 	<reporting>
@@ -200,8 +201,8 @@
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
 		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
 
@@ -212,5 +213,5 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<artifactId>agents_i3a</artifactId>
+	
 </project>
