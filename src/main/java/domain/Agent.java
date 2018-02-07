@@ -16,6 +16,10 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import Foundation.CSVFile;
 import Foundation.URL;
 
@@ -26,6 +30,7 @@ import Foundation.URL;
  * @since 06/02/2017
  */
 @Document(collection = "users")
+@JsonPropertyOrder({ "name", "location", "email", "id", "kind", "kindCode" })
 public class Agent implements Comparable<Agent> {
 
     @Id
@@ -108,6 +113,8 @@ public class Agent implements Comparable<Agent> {
     /**
      * @return the password of the user.
      */
+    @JsonIgnore
+    @JsonProperty(value = "user_password")
     public String getPassword() {
 	return password;
     }
