@@ -95,13 +95,13 @@ user interface manually you'll have to introduce this document:
     "location" : "10N10W",
     "email" : "oswald@tardis.universe",
     "kindCode" : "1",
-    "id" : "00000000A",
+    "id" : "45170000A",
     "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
 }
 ```
 
 And as data use:
- - login: 00000000A
+ - login: 45170000A
  - password: 4[[j[frVCUMJ>hU
  - Kind of agent: Person
 
