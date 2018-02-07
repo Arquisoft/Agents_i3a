@@ -110,6 +110,8 @@ And as data use:
 
 As an alternative, you can perform tests on the REST service by executing the next function in the command line:
 
- curl -H "Content-Type: application/json" -X POST -d '{"login":"45170000A","password":"4[[j[frVCUMJ>hU", "kind":1}' http://localhost:8080/user
- 
+```bash
+curl -H "Content-Type: application/json" -X POST -d '{"login":"45170000A","password":"4[[j[frVCUMJ>hU", "kind":1}' http://localhost:8080/user
+```
+
  Take into account that the parameters passed in the function are the same as the previous JSON file, so they have to be synchronised.
