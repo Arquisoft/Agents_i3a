@@ -23,21 +23,19 @@ import domain.Agent;
  */
 public interface Database {
 
-    /**
-     * Updated the information of a given user.
-     * 
-     * @param user
-     *            to update its information.
-     */
-    void updateInfo(Agent user);
+	/**
+	 * Updated the information of a given user.
+	 * 
+	 * @param user to update its information.
+	 */
+	void updateInfo( Agent user );
 
-    /**
-     * Gets a participant from its email address.
-     * 
-     * @param id
-     *            of the participant to get.
-     * @return the participant if exists, null otherwise.
-     */
-    Agent getParticipant(String id);
+	/**
+	 * Gets a participant from its email address.
+	 * 
+	 * @param id of the participant to get.
+	 * @return the participant if exists, null otherwise.
+	 */
+	Agent getParticipant( String id );
 
 }

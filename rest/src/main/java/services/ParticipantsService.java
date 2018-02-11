@@ -21,27 +21,23 @@ import domain.Agent;
  */
 public interface ParticipantsService {
 
-    /**
-     * Given the data of a user, checks if there's such an user, and if the password
-     * matches
-     * 
-     * @param identifier
-     *            The login email for the user
-     * @param password
-     *            The password given on the credentials
-     * @return Either the proper user, if the user exists and the password matches.
-     *         Null otherwise
-     */
-    Agent getParticipant(String identifier, String password, int kindOfAgent);
+	/**
+	 * Given the data of a user, checks if there's such an user, and if the
+	 * password matches
+	 * 
+	 * @param identifier The login email for the user
+	 * @param password The password given on the credentials
+	 * @return Either the proper user, if the user exists and the password
+	 *         matches. Null otherwise
+	 */
+	Agent getParticipant( String identifier, String password, int kindOfAgent );
 
-    /**
-     * Updates the password for the given user
-     * 
-     * @param user
-     *            The given user
-     * @param newPassword
-     *            The new password
-     */
-    void updateInfo(Agent user, String newPassword);
+	/**
+	 * Updates the password for the given user
+	 * 
+	 * @param user The given user
+	 * @param newPassword The new password
+	 */
+	void updateInfo( Agent user, String newPassword );
 
 }

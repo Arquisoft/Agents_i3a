@@ -26,22 +26,22 @@ import services.ParticipantsService;
  * @since 17/02/2017
  */
 public class UserResponseAction {
-    private final ParticipantsService part;
+	private final ParticipantsService part;
 
-    UserResponseAction(ParticipantsService part) {
-	this.part = part;
-    }
-
-    public ResponseEntity<Agent> execute(AgentLoginData info) {
-	
-	Agent user = part.getParticipant(info.getLogin(), info.getPassword(), info.getKind());
-	
-	//AgentInfoAdapter data = new AgentInfoAdapter(user);
-	if (user == null) {
-	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	} else {
-	    //return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
-	    return new ResponseEntity<>(user, HttpStatus.OK);
+	UserResponseAction( ParticipantsService part ) {
+		this.part = part;
 	}
-    }
+
+	public ResponseEntity<Agent> execute( AgentLoginData info ) {
+
+		Agent user = part.getParticipant( info.getLogin(), info.getPassword(), info.getKind() );
+
+		// AgentInfoAdapter data = new AgentInfoAdapter(user);
+		if (user == null) {
+			return new ResponseEntity<>( HttpStatus.NOT_FOUND );
+		} else {
+			// return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
+			return new ResponseEntity<>( user, HttpStatus.OK );
+		}
+	}
 }

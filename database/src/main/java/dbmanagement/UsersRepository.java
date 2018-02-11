@@ -25,26 +25,22 @@ import domain.Agent;
  * @author Damian.
  * @since 06/02/2017
  */
-@Repository
-public interface UsersRepository extends MongoRepository<Agent, ObjectId> {
+@Repository public interface UsersRepository extends MongoRepository<Agent, ObjectId> {
 
-    /**
-     * Find a user by its email address.
-     * 
-     * @param id
-     *            address of the user to look for.
-     * @return the user if exists, null otherwise.
-     */
-    Agent findById(String id);
+	/**
+	 * Find a user by its email address.
+	 * 
+	 * @param id address of the user to look for.
+	 * @return the user if exists, null otherwise.
+	 */
+	Agent findById( String id );
 
-    /**
-     * Find a user by its email and password.
-     * 
-     * @param email
-     *            of the user to look for.
-     * @param password
-     *            of the user to look for.
-     * @return the user if login data is correct, null otherwise.
-     */
-    Agent findByEmailAndPassword(String email, String password);
+	/**
+	 * Find a user by its email and password.
+	 * 
+	 * @param email of the user to look for.
+	 * @param password of the user to look for.
+	 * @return the user if login data is correct, null otherwise.
+	 */
+	Agent findByEmailAndPassword( String email, String password );
 }
