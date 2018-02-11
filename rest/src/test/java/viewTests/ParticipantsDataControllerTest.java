@@ -31,9 +31,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import core.Application;
 import dbmanagement.UsersRepository;
 import domain.Agent;
-import main.Application;
 
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)

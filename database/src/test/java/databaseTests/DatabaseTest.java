@@ -24,10 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import core.Application;
 import dbmanagement.Database;
 import dbmanagement.UsersRepository;
 import domain.Agent;
-import main.Application;
 
 /**
  * Created by Nicolás on 15/02/2017.
