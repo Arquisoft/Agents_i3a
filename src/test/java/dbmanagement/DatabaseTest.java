@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package databaseTests;
+package dbmanagement;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -81,7 +81,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testUpdateInfoWithPassword() {
+    public void updatePasswordTest() {
 	// It should be previously encoded if the DB is given so this may be changed.
 	Agent user = dat.getParticipant(testedUser.getId());
 	user.setPassword("confidencial");
@@ -102,7 +102,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testUpdateInfoAndAdaptation() throws IOException {
+    public void updateAgentDataTest() throws IOException {
 	Agent user = dat.getParticipant(testedUser2.getId());
 
 	Assert.assertEquals("Maria", user.getName());
