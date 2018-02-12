@@ -31,12 +31,13 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+
 import es.uniovi.asw.agents_i3a.Application;
 import es.uniovi.asw.agents_i3a.dbmanagement.UsersRepository;
 import es.uniovi.asw.agents_i3a.domain.Agent;
 
 @SpringBootTest(classes = {
-		Application.class }) @RunWith(SpringJUnit4ClassRunner.class) public class ParticipantsDataControllerTest {
+		Application.class }) @RunWith(SpringJUnit4ClassRunner.class) public class RestControllerTest {
 
 	@Autowired private WebApplicationContext context;
 
@@ -70,7 +71,7 @@ import es.uniovi.asw.agents_i3a.domain.Agent;
 		repo.delete( maria );
 	}
 
-	@Test public void userInsertInformation() throws Exception {
+	@Test public void JSONRequestTest() throws Exception {
 		String payload = String.format( QUERY_STRING, maria.getId(), plainPassword,
 				maria.getKindCode() );
 		// We send a POST request to that URI (from http:localhost...)
@@ -91,28 +92,7 @@ import es.uniovi.asw.agents_i3a.domain.Agent;
 				.andExpect( jsonPath( "$.kindCode", is( maria.getKindCode() ) ) );
 	}
 
-	@Test public void userInsertInformationXML() throws Exception {
-		String payload = String.format(
-				"<data><login>%s</login><password>%s</password><kind>%s</kind></data>",
-				maria.getId(), plainPassword, maria.getKindCode() );
-		// POST request with XML content
-		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
-				.contentType( MediaType.APPLICATION_XML_VALUE ).content( payload.getBytes() );
-		// AndDoPrint it is very usefull to see the http response and see if
-		// something went wrong.
-		mockMvc.perform( request ).andDo( print() )
-				// The state of the response must be OK. (200);
-				.andExpect( status().isOk() )
-				// We can do jsonpaths in order to check
-				.andExpect( jsonPath( "$.name", is( maria.getName() ) ) )
-				.andExpect( jsonPath( "$.id", is( maria.getId() ) ) )
-				.andExpect( jsonPath( "$.location", is( maria.getLocation() ) ) )
-				.andExpect( jsonPath( "$.email", is( maria.getEmail() ) ) )
-				.andExpect( jsonPath( "$.kind", is( maria.getKind() ) ) )
-				.andExpect( jsonPath( "$.kindCode", is( maria.getKindCode() ) ) );
-	}
-
-	@Test public void testForNotFound() throws Exception {
+	@Test public void userNotFoundTest() throws Exception {
 		String payload = String.format( QUERY_STRING, "Nothing", "Not really", -1 );
 		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
 				.contentType( MediaType.APPLICATION_JSON )
@@ -129,7 +109,7 @@ import es.uniovi.asw.agents_i3a.domain.Agent;
 	/**
 	 * Should return a 404 as before
 	 */
-	@Test public void testForIncorrectPassword() throws Exception {
+	@Test public void incorrectPasswordRequestTest() throws Exception {
 		String payload = String.format( QUERY_STRING, maria.getId(), "Not maria's password", 1 );
 		MockHttpServletRequestBuilder request = post( "/user" ).session( session )
 				.contentType( MediaType.APPLICATION_JSON )

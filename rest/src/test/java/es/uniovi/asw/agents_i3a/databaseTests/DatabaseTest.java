@@ -72,30 +72,24 @@ import es.uniovi.asw.agents_i3a.domain.Agent;
 		repo.delete( testedUser2 );
 	}
 
-	@Test public void testUpdateInfoWithPassword() {
+	@Test public void updatePasswordTest() {
 		// It should be previously encoded if the DB is given so this may be
 		// changed.
 		Agent user = dat.getParticipant( testedUser.getId() );
 		user.setPassword( "confidencial" );
 		dat.updateInfo( user );
 		Agent userAfter = dat.getParticipant( testedUser.getId() );
+		
+		// They should be the same when we introduce the password.
 		Assert.assertTrue( new StrongPasswordEncryptor().checkPassword( "confidencial",
-				userAfter.getPassword() ) ); // They
-		// should
-		// be
-		// the
-		// same
-		// when
-		// we
-		// introduce
-		// the
-		// password.
-		Assert.assertEquals( user, userAfter ); // They should be the same user
-												// by the equals.
+				userAfter.getPassword() ) );
+		
+		// They should be the same user by the equals.
+		Assert.assertEquals( user, userAfter );
 
 	}
 
-	@Test public void testUpdateInfoAndAdaptation() throws IOException {
+	@Test public void updateAgentDataTest() throws IOException {
 		Agent user = dat.getParticipant( testedUser2.getId() );
 
 		Assert.assertEquals( "Maria", user.getName() );
