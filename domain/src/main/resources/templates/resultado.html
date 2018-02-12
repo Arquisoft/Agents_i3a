@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hola :D</title>
+</head>
+<body>
+    <h1>Resultado</h1>
+    <p th:text="${re}"/>
+    <a href="/">Volver a la pantalla de inicio</a>
+    <form action="/changePassword" method="post">
+        <p> Nueva contraseña <input type="text"/></p>
+        <p> <input type="submit" content="Cambiar"/></p>
+    </form>
+
+    <p content="${nuevaContrasena}"></p>
+</body>
+</html>
