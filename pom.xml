@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.uniovi.asw</groupId>
 	<artifactId>agents_i3a</artifactId>
 	<name>agents_i3a</name>
 	<version>0.0.1</version>
+	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.3.RELEASE</version>
+		<version>1.5.10.RELEASE</version>
 	</parent>
+<<<<<<< HEAD
+
+	<modules>
+		<module>rest</module>
+		<module>web</module>
+  </modules>
+=======
 
 	<dependencies>
 		<dependency>
@@ -39,27 +46,27 @@
 			<version>1.0.0.RC1</version>
 			<scope>test</scope>
 		</dependency>
+>>>>>>> Arquisoft/development
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<dependencies>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-rest</artifactId>
+			<artifactId>spring-boot</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
+			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-test</artifactId>
-		</dependency>
+<<<<<<< HEAD
+=======
 
 		<!-- Jasypt Depencency -->
 		<dependency>
@@ -67,12 +74,16 @@
 			<artifactId>jasypt</artifactId>
 			<version>1.9.2</version>
 		</dependency>
+>>>>>>> Arquisoft/development
 
-		<!-- MongoDB Dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+<<<<<<< HEAD
+	</dependencies>
+
+=======
 
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
@@ -214,4 +225,5 @@
 	</pluginRepositories>
 
 	
+>>>>>>> Arquisoft/development
 </project>
