@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package view;
+package controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +25,10 @@ import services.ParticipantsService;
  * @author Nicolás
  * @since 17/02/2017
  */
-public class UserResponseAction {
+public class LoginResponseController {
     private final ParticipantsService part;
 
-    UserResponseAction(ParticipantsService part) {
+    LoginResponseController(ParticipantsService part) {
 	this.part = part;
     }
 

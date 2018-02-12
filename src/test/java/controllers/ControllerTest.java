@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package viewTests;
+package controllers;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +40,7 @@ import main.Application;
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Category(IntegrationTest.class)
-public class ParticipantsDataControllerTest {
+public class ControllerTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -79,7 +79,7 @@ public class ParticipantsDataControllerTest {
     }
 
     @Test
-    public void userInsertInformation() throws Exception {
+    public void RESTJSONRequestTest() throws Exception {
 	String payload = String.format(QUERY_STRING, maria.getId(), plainPassword, maria.getKindCode());
 	// We send a POST request to that URI (from http:localhost...)
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
@@ -97,7 +97,7 @@ public class ParticipantsDataControllerTest {
     }
 
     @Test
-    public void userInsertInformationXML() throws Exception {
+    public void RESTXMLRequestTest() throws Exception {
 	String payload = String.format("<data><login>%s</login><password>%s</password><kind>%s</kind></data>",
 		maria.getId(), plainPassword, maria.getKindCode());
 	// POST request with XML content
@@ -116,14 +116,14 @@ public class ParticipantsDataControllerTest {
     }
 
     @Test
-    public void userInterfaceInsertInfoCorect() throws Exception {
+    public void webInterfaceLoginTest() throws Exception {
 	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getId())
 		.param("password", plainPassword).param("kind", Integer.toString(maria.getKindCode()));
 	mockMvc.perform(request).andExpect(status().isOk());
     }
 
     @Test
-    public void testForNotFound() throws Exception {
+    public void notFoundTest() throws Exception {
 	String payload = String.format(QUERY_STRING, "Nothing", "Not really", -1);
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
 		.content(payload.getBytes());
@@ -140,7 +140,7 @@ public class ParticipantsDataControllerTest {
      * Should return a 404 as before
      */
     @Test
-    public void testForIncorrectPassword() throws Exception {
+    public void passwordTest() throws Exception {
 	String payload = String.format(QUERY_STRING, maria.getId(), "Not maria's password", 1);
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
 		.content(payload.getBytes());
