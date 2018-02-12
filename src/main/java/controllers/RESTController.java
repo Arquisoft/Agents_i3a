@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package view;
+package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -25,12 +25,12 @@ import domain.AgentLoginData;
 import services.ParticipantsService;
 
 @RestController
-public class ParticipantsDataController {
+public class RESTController {
 
     private final ParticipantsService part;
 
     @Autowired
-    ParticipantsDataController(ParticipantsService part) {
+    RESTController(ParticipantsService part) {
 	this.part = part;
     }
 
@@ -38,7 +38,7 @@ public class ParticipantsDataController {
 	    MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Agent> userOkJSON(@RequestBody AgentLoginData info) {
-	return new UserResponseAction(part).execute(info);
+	return new LoginResponseController(part).execute(info);
     }
 
 }

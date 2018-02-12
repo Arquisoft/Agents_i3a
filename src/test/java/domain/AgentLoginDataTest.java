@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package domainTests;
+package domain;
 
 import static org.junit.Assert.assertEquals;
 
