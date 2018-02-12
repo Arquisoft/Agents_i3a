@@ -1,9 +1,8 @@
 language: java
 jdk:
 - oraclejdk8
-- oraclejdk9
-#services:
-#- mongodb
+script:
+  - mvn test -Dgroups="org.willy.IntegrationTestExample.UnitTest" && mvn test -Dgroups="org.willy.IntegrationTestExample.UnitTest"
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_script:
