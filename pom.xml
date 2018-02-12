@@ -16,9 +16,7 @@
 
 	<modules>
 		<module>rest</module>
-		<module>database</module>
-		<module>domain</module>
-    <module>core</module>
+		<module>web</module>
   </modules>
 
 	<properties>
