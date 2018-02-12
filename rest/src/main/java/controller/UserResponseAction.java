@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package view;
+package controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -94,32 +94,6 @@ public class ParticipantsDataControllerTest {
     }
 
     @Test
-    public void userInsertInformationXML() throws Exception {
-	String payload = String.format("<data><login>%s</login><password>%s</password><kind>%s</kind></data>",
-		maria.getId(), plainPassword, maria.getKindCode());
-	// POST request with XML content
-	MockHttpServletRequestBuilder request = post("/user").session(session)
-		.contentType(MediaType.APPLICATION_XML_VALUE).content(payload.getBytes());
-	// AndDoPrint it is very usefull to see the http response and see if
-	// something went wrong.
-	mockMvc.perform(request).andDo(print())
-		// The state of the response must be OK. (200);
-		.andExpect(status().isOk())
-		// We can do jsonpaths in order to check
-		.andExpect(jsonPath("$.name", is(maria.getName()))).andExpect(jsonPath("$.id", is(maria.getId())))
-		.andExpect(jsonPath("$.location", is(maria.getLocation())))
-		.andExpect(jsonPath("$.email", is(maria.getEmail()))).andExpect(jsonPath("$.kind", is(maria.getKind())))
-		.andExpect(jsonPath("$.kindCode", is(maria.getKindCode())));
-    }
-
-    @Test
-    public void userInterfaceInsertInfoCorect() throws Exception {
-	MockHttpServletRequestBuilder request = post("/userForm").session(session).param("login", maria.getId())
-		.param("password", plainPassword).param("kind", Integer.toString(maria.getKindCode()));
-	mockMvc.perform(request).andExpect(status().isOk());
-    }
-
-    @Test
     public void testForNotFound() throws Exception {
 	String payload = String.format(QUERY_STRING, "Nothing", "Not really", -1);
 	MockHttpServletRequestBuilder request = post("/user").session(session).contentType(MediaType.APPLICATION_JSON)
