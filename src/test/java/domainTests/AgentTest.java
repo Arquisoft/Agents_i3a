@@ -18,9 +18,11 @@ import java.io.IOException;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import Foundation.CSVFile;
 import Foundation.URL;
+import categories.UnitTest;
 import domain.Agent;
 
 /**
@@ -34,6 +36,7 @@ import domain.Agent;
  * @version 201802041300
  * @since 15/02/2017
  */
+@Category(UnitTest.class)
 public class AgentTest {
 
     private Agent nico, jorge, damian;
