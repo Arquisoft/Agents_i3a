@@ -68,6 +68,12 @@ Up to this point the module should be up and running in the address [localhost:8
 
 ### Working with Agents_i3a
 
+#### Running Agents_i3a
+To run the module you need to set the repository as working directory and run the following statement
+```bash
+mvn spring-boot:run
+```
+
 #### REST requests
 In order to use the user credentials to obtain your data, you can send a POST request to [localhost:8080/user](http://localhost:8080/user). The
 data in this request can come as:
@@ -84,7 +90,6 @@ data in this request can come as:
  <kind>agent-kind-as-integer-code</kind>
 </data>
 ```
-
 ### Testing Agents_i3a
 To run the already existing tests of the module you can choose by running as JUnit tests, from the IDE. Or as the implements Maven you can run Maven tests task as `mvn test`. If the database is up and running everything should go fine and smooth. No data in the database is needed to run them. But if you want to test the
 user interface manually you'll have to introduce this document: 
