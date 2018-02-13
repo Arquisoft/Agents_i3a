@@ -9,12 +9,15 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package domainTests;
+package domain;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import categories.UnitTest;
 
 import domain.AgentLoginData;
 
@@ -23,6 +26,7 @@ import domain.AgentLoginData;
  * 
  * Adapter by Víctor on 02/02/2018
  */
+@Category(UnitTest.class)
 public class AgentLoginDataTest {
 
     private AgentLoginData test;

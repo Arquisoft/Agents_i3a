@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package view;
+package controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +29,11 @@ import services.ParticipantsService;
  * @since 08/02/2017
  */
 @Controller
-public class ParticipantsController {
+public class WebInterfaceController {
 
     private final ParticipantsService participantsService;
 
-    ParticipantsController(ParticipantsService part) {
+    WebInterfaceController(ParticipantsService part) {
 	this.participantsService = part;
     }
 
@@ -50,7 +50,7 @@ public class ParticipantsController {
     public String showInfo(Model model, @ModelAttribute AgentLoginData data) {
 	Agent user = participantsService.getParticipant(data.getLogin(), data.getPassword(), data.getKind());
 	if (user == null) {
-	    throw new UserNotFoundException();
+	    throw new AgentNotFoundException();
 	} else {
 	    model.addAttribute("name", user.getName());
 	    model.addAttribute("location", user.getLocation());

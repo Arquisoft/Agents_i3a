@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package databaseTests;
+package dbmanagement;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -19,11 +19,13 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import categories.IntegrationTest;
 import dbmanagement.Database;
 import dbmanagement.UsersRepository;
 import domain.Agent;
@@ -36,6 +38,7 @@ import main.Application;
  */
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)
+@Category(IntegrationTest.class)
 public class DatabaseTest {
 
     @Autowired
@@ -81,7 +84,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testUpdateInfoWithPassword() {
+    public void updatePasswordTest() {
 	// It should be previously encoded if the DB is given so this may be changed.
 	Agent user = dat.getParticipant(testedUser.getId());
 	user.setPassword("confidencial");
@@ -102,7 +105,7 @@ public class DatabaseTest {
     }
 
     @Test
-    public void testUpdateInfoAndAdaptation() throws IOException {
+    public void updateAgentDataTest() throws IOException {
 	Agent user = dat.getParticipant(testedUser2.getId());
 
 	Assert.assertEquals("Maria", user.getName());
