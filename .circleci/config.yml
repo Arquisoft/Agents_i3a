@@ -30,7 +30,7 @@ workflows:
   build_and_tests:
     jobs:
       - build
-      - unit-tests:
+      - unit-tests
       - integration-tests:
           requires:
             - unit-tests
