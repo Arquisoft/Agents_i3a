@@ -33,4 +33,4 @@ workflows:
       - unit-tests
       - integration-tests:
           requires:
-            - unit-tests
+            - build
