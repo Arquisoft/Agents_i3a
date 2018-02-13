@@ -31,8 +31,6 @@ workflows:
     jobs:
       - build
       - unit-tests:
-          requires:
-            - build
       - integration-tests:
           requires:
             - unit-tests
