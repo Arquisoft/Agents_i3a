@@ -29,7 +29,7 @@ import Foundation.URL;
  * @author Damian.
  * @since 06/02/2017
  */
-@Document(collection = "users")
+@Document(collection = "agents")
 @JsonPropertyOrder({ "name", "location", "email", "id", "kind", "kindCode" })
 public class Agent implements Comparable<Agent> {
 
