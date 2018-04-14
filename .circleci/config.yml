@@ -21,13 +21,13 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: mvn test -Dgroups="categories.UnitTest"
+      - run: mvn test -Dgroups="TestKit.UnitTest"
 
   integration-tests:
     <<: *defaults
     steps:
       - checkout
-      - run: mvn test -Dgroups="categories.IntegrationTest"
+      - run: mvn test -Dgroups="TestKit.IntegrationTest"
 
 workflows:
   version: 2
