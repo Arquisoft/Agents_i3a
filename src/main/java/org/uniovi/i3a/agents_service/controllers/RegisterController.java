@@ -2,7 +2,7 @@ package org.uniovi.i3a.agents_service.controllers;
 
 import java.util.Map;
 
-import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
