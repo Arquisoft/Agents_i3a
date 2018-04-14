@@ -9,7 +9,7 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package domain;
+package org.uniovi.i3a.agents_service.types;
 
 import static org.junit.Assert.*;
 
@@ -22,9 +22,7 @@ import org.junit.experimental.categories.Category;
 
 import Foundation.CSVFile;
 import Foundation.URL;
-import categories.UnitTest;
-
-import domain.Agent;
+import TestKit.UnitTest;
 
 /**
  * 
@@ -182,7 +180,7 @@ public class AgentTest {
 	nico.setKindCode(1);
 	assertEquals("Person", nico.getKind());
 
-	// Nico was previously set to (2) Entity. Checking that both, the code and the
+	// Jorge was previously set to (2) Entity. Checking that both, the code and the
 	// resolution work.
 	assertEquals("Entity", jorge.getKind());
 	assertEquals(2, jorge.getKindCode());
@@ -200,27 +198,19 @@ public class AgentTest {
 	// Creating a new CSV file with diffetent attributes that the old one. Checking
 	// that if the file changes at execution times the resolution of names still
 	// works.
-	CSVFile originalFile = CSVFile.of(new URL("src/main/resources/master.csv"), ",");
-	CSVFile testFile = new CSVFile(new URL("src/main/resources/master.csv"));
+	CSVFile originalFile = CSVFile.of(new URL("src/main/resources/master.csv"), ",", "id", "kind");
+	CSVFile testFile = CSVFile.of(new URL("src/main/resources/master.csv"),",", "id", "kind");
 	testFile.setSeparator(",");
-	String[] person = { "Person" }, entity = { "Entity" }, sensor = { "Sensor" }, iphone = { "iPhone" };
-	testFile.getContent().put("1", person);
-	testFile.getContent().put("2", entity);
-	testFile.getContent().put("3", sensor);
-	testFile.getContent().put("4", iphone);
+	
+	testFile.addRow("4", "iphone");
 	testFile.save();
 
 	// Now we set nico to 4, a value that was not in the previous master.csv file.
 	jorge.setKindCode(4);
-	assertEquals("iPhone", jorge.getKind());
-	
-	// We swap the entity and the person values in the csv file
-	testFile.getContent().replace("1", entity);
-	testFile.getContent().replace("2", person);
-	testFile.save();
+	assertEquals("iphone", jorge.getKind());
 	
 	// Checking the resolution of the agent kind still works.
-	assertEquals("Entity", nico.getKind());
+	assertEquals("Person", nico.getKind());
 
 	// We revert changes and save the original file.
 	originalFile.save();
@@ -240,7 +230,7 @@ public class AgentTest {
 	// Checking the format of the toString.
 	assertEquals("{" + "name='" + nico.getName() + "'," + "location='" + nico.getLocation() + "'," + "email='"
 		+ nico.getEmail() + "'," + "id='" + nico.getId() + "'," + "kind='" + nico.getKind() + "',"
-		+ "kindCode='" + nico.getKindCode() + "'" + "}", nico.toString());
+		+ "kindCode=" + nico.getKindCode() + "}", nico.toString());
     }
 
     @SuppressWarnings("unlikely-arg-type")
