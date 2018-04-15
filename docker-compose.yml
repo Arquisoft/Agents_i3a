@@ -1,0 +1,15 @@
+version: '2.2'
+services:
+  auth-agents:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: incisystem/agents_service
+    ports:
+      - 8082:8082
+    networks:
+      - network1
+    scale: 1
+ 
+networks:
+  network1:

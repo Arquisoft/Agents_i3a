@@ -9,7 +9,9 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package domain;
+package org.uniovi.i3a.agents_service.types;
+
+import java.util.NoSuchElementException;
 
 import org.bson.types.ObjectId;
 import org.jasypt.util.password.StrongPasswordEncryptor;
@@ -22,6 +24,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import Foundation.CSVFile;
 import Foundation.URL;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of the user.
@@ -29,6 +34,7 @@ import Foundation.URL;
  * @author Damian.
  * @since 06/02/2017
  */
+@Slf4j
 @Document(collection = "agents")
 @JsonPropertyOrder({ "name", "location", "email", "id", "kind", "kindCode" })
 public class Agent implements Comparable<Agent> {
@@ -36,7 +42,18 @@ public class Agent implements Comparable<Agent> {
     @Id
     private ObjectId _id;
 
-    private String name, email, password, id, location;
+    @Setter
+    private String name;
+    
+    @Setter
+    private String email;
+    private String password;
+    private String id;
+    
+    @Setter
+    private String location;
+    
+    @Getter @Setter
     private int kindCode;
     
     public final static String KIND_NOT_FOUND = "KIND NOT FOUND";
@@ -61,12 +78,12 @@ public class Agent implements Comparable<Agent> {
     @Override
     public String toString() {
 	final StringBuilder sb = new StringBuilder("{");
-	sb.append("name='").append(name).append('\'');
-	sb.append(",location='").append(location).append('\'');
-	sb.append(",email='").append(email).append('\'');
-	sb.append(",id='").append(id).append('\'');
-	sb.append(",kind='").append(getKind()).append('\'');
-	sb.append(",kindCode='").append(kindCode).append("'");
+	sb.append("name:'").append(name).append('\'');
+	sb.append(",location:'").append(location).append('\'');
+	sb.append(",email:'").append(email).append('\'');
+	sb.append(",id:'").append(id).append('\'');
+	sb.append(",kind:'").append(getKind()).append('\'');
+	sb.append(",kindCode:").append(kindCode);
 	sb.append('}');
 	return sb.toString();
     }
@@ -126,14 +143,6 @@ public class Agent implements Comparable<Agent> {
 	return (id == null) ? id = "" : id;
     }
 
-    public void setName(String name) {
-	this.name = name;
-    }
-
-    public void setEmail(String email) {
-	this.email = email;
-    }
-
     public void setPassword(String password) {
 	this.password = (password == null) ? new StrongPasswordEncryptor().encryptPassword(password = "")
 		: new StrongPasswordEncryptor().encryptPassword(password);
@@ -141,10 +150,6 @@ public class Agent implements Comparable<Agent> {
 
     public String getLocation() {
 	return (location == null) ? location = "" : location;
-    }
-
-    public void setLocation(String location) {
-	this.location = location;
     }
 
     /**
@@ -156,30 +161,13 @@ public class Agent implements Comparable<Agent> {
      */
     public String getKind() {
 	try {
-	    return CSVFile.of(new URL("src/main/resources/master.csv"), ",").getContent()
-		    .get(Integer.toString(kindCode))[0];
-	} catch (NullPointerException e) {
+	    return CSVFile.of(new URL("src/main/resources/master.csv"), ",", "id", "kind" )
+		    .getRows().stream()
+		    .filter( r -> r.getColumn( "id" ).equals( Integer.toString( this.kindCode ) ) )
+		    .findAny().get().getColumn( "kind" );
+	} catch (NoSuchElementException e) {
+	    log.warn("No kind found for: " + this.kindCode);
 	    return "KIND NOT FOUND";
 	}
     }
-
-    /**
-     * Gives the kind of user as a code (int type).
-     * 
-     * @return the kind of user as a code (int type).
-     */
-    public int getKindCode() {
-	return kindCode;
-    }
-
-    /**
-     * Sets the kind of user from a code.
-     * 
-     * @param kindCode
-     *            to set to the user.
-     */
-    public void setKindCode(int kindCode) {
-	this.kindCode = kindCode;
-    }
-
 }

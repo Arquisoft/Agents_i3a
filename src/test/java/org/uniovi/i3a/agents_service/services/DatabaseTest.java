@@ -9,47 +9,39 @@
  * This class is based on the AlbUtil project.
  * 
  */
-package dbmanagement;
+package org.uniovi.i3a.agents_service.services;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 import org.jasypt.util.password.StrongPasswordEncryptor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import static org.junit.Assert.*;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.uniovi.i3a.agents_service.Service;
+import org.uniovi.i3a.agents_service.types.Agent;
 
-import categories.IntegrationTest;
-import dbmanagement.Database;
-import dbmanagement.UsersRepository;
-import domain.Agent;
-import main.Application;
+import TestKit.IntegrationTest;
 
 /**
  * Created by Nicolás on 15/02/2017.
  * 
  * Adapter by Víctor on 02/02/2018
  */
-@SpringBootTest(classes = { Application.class })
+@SpringBootTest(classes = { Service.class })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Category(IntegrationTest.class)
 public class DatabaseTest {
 
     @Autowired
-    private UsersRepository repo;
+    private AgentsService service;
 
     // User to use as reference for test
     private Agent testedUser;
     private Agent testedUser2;
-
-    @Autowired
-    private Database dat;
 
     /*
      * Para este test se necesita el siguiente documento en la base de datos: {
@@ -67,29 +59,32 @@ public class DatabaseTest {
     @Before
     public void setUp() throws IOException {
 	testedUser = new Agent("Luis", "48.2S35E", "LGracia@gmail.com", "Luis123", "147", 1);
-	repo.insert(testedUser);
-
-	Calendar cal = Calendar.getInstance();
-	cal.set(Calendar.YEAR, 1990);
-	cal.set(Calendar.MONTH, 1);
-	cal.set(Calendar.DAY_OF_MONTH, 1);
+	service.save(testedUser);
+	
 	testedUser2 = new Agent("Maria", "10N30E", "asd", "pass14753", "158", 1);
-	repo.insert(testedUser2);
+	service.save(testedUser2);
     }
 
     @After
     public void tearDown() {
-	repo.delete(testedUser);
-	repo.delete(testedUser2);
+	service.delete(testedUser);
+	service.delete(testedUser2);
     }
 
     @Test
+    public void getAgentTest() {
+	Agent agent = service.getAgent(testedUser.getId(), "Luis123", testedUser.getKindCode());
+	assertNotNull(agent);
+	assertEquals(testedUser.getName(), agent.getName());
+    }
+    
+    @Test
     public void updatePasswordTest() {
 	// It should be previously encoded if the DB is given so this may be changed.
-	Agent user = dat.getParticipant(testedUser.getId());
+	Agent user = service.getAgent(testedUser.getId(), "Luis123", testedUser.getKindCode());
 	user.setPassword("confidencial");
-	dat.updateInfo(user);
-	Agent userAfter = dat.getParticipant(testedUser.getId());
+	service.save(user);
+	Agent userAfter = service.getAgent(testedUser.getId(), "confidencial", testedUser.getKindCode());
 	Assert.assertTrue(new StrongPasswordEncryptor().checkPassword("confidencial", userAfter.getPassword())); // They
 														 // should
 														 // be
@@ -106,7 +101,7 @@ public class DatabaseTest {
 
     @Test
     public void updateAgentDataTest() throws IOException {
-	Agent user = dat.getParticipant(testedUser2.getId());
+	Agent user = service.getAgent(testedUser2.getId(), "pass14753", 1);
 
 	Assert.assertEquals("Maria", user.getName());
 	Assert.assertEquals("10N30E", user.getLocation());
@@ -126,8 +121,8 @@ public class DatabaseTest {
 	user.setLocation("45N35.5W");
 	user.setKindCode(2);
 
-	dat.updateInfo(user);
-	Agent updatedUser = dat.getParticipant(testedUser2.getId());
+	service.save(user);
+	Agent updatedUser = service.getAgent(testedUser2.getId(), "pass14753", 2);
 	Assert.assertEquals("Pepa", updatedUser.getName());
 	Assert.assertEquals("45N35.5W", updatedUser.getLocation());
 	Assert.assertEquals("158", updatedUser.getId());
