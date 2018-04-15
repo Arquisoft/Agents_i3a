@@ -94,12 +94,35 @@
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>incisystem/agents_service</repository>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+					<resources>
+						<resource>
+							<targetPath>src/main/resources</targetPath>
+							<directory>src/main/resources</directory>
+							<include>*</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 
 			<plugin>

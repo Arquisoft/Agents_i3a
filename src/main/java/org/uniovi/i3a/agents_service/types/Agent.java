@@ -78,12 +78,12 @@ public class Agent implements Comparable<Agent> {
     @Override
     public String toString() {
 	final StringBuilder sb = new StringBuilder("{");
-	sb.append("name='").append(name).append('\'');
-	sb.append(",location='").append(location).append('\'');
-	sb.append(",email='").append(email).append('\'');
-	sb.append(",id='").append(id).append('\'');
-	sb.append(",kind='").append(getKind()).append('\'');
-	sb.append(",kindCode=").append(kindCode).append("");
+	sb.append("name:'").append(name).append('\'');
+	sb.append(",location:'").append(location).append('\'');
+	sb.append(",email:'").append(email).append('\'');
+	sb.append(",id:'").append(id).append('\'');
+	sb.append(",kind:'").append(getKind()).append('\'');
+	sb.append(",kindCode:").append(kindCode);
 	sb.append('}');
 	return sb.toString();
     }

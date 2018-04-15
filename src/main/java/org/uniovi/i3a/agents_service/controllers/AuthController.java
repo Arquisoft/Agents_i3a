@@ -40,7 +40,7 @@ public class AuthController {
 	    try {
 		return new ResponseEntity<String>(new JSONObject(agent.toString()).toString(), HttpStatus.OK);
 	    } catch (JSONException e) {
-		log.error("Exception generated when trying to send response as JSONObject.");
+		log.error("Exception generated when trying to send response as JSONObject: " + e.getMessage());
 		log.trace(e.getMessage());
 	    }
 	}
